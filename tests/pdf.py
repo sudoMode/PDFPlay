@@ -8,7 +8,7 @@
 # In[4]:
 
 
-from PyPDF4 import PdfFileReader, PdfFileWriter
+from PyPDF4.pdf import PdfFileReader, PdfFileWriter
 from PyPDF4.pdf import ContentStream
 from PyPDF4.generic import TextStringObject, NameObject
 from PyPDF4.utils import b_
