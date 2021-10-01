@@ -1,11 +1,42 @@
+#!/usr/bin/local/python3.9
+# -*- coding: utf-8 -*-
+
+"""
+    Builds CLI options
+    NOTE: call from terminal
+"""
+
 from argparse import ArgumentParser
 
-_FONT_NAME = dict(name='--font-name', flag='-fn', type=str, default='xyz',
-                  dest='font_name', help='Font to be used for watermark text.')
+
+# TODO: make more user-friendly options
+_FONT_NAME = dict(name='--font-name', flag='-fn', type=str, default='Helevetica',
+                  dest='font_name', help='Name of the font.')
+
+_FONT_SIZE = dict(name='--font-size', flag='-fs', type=int, default=25,
+                  dest='font_size', help='Size of the font.')
+
+_ROTATION = dict(name='--rotation-angle', flag='-ra', type=int, default=0,
+                 dest='rotation_angle', help='Degree of rotation.')
+
+_POSITION_X = dict(name='--position-x', flag='-px', type=int, default=0,
+                   dest='postion_x', help='Postion on X-axis.')
+
+_POSITION_Y = dict(name='--position-y', flag='-py', type=int, default=0,
+                   dest='postion_y', help='Postion on Y-axis.')
+
+
+_COLOR = dict(name='--color', flag='-c', type=str, default='black',
+                   dest='color', help='Color of the text.')
+
+_OPACITY = dict(name='--opacity', flag='-o', type=int, default=1,
+                dest='opacity', help='Opacity of the text.')
 
 # build commands
 # watermark
-_OPTIONAL_ARGUMENTS = dict(font_name=_FONT_NAME)
+_OPTIONAL_ARGUMENTS = dict(font_name=_FONT_NAME, font_size=_FONT_SIZE,
+                           rotation=_ROTATION, position_x=_POSITION_X,
+                           position_y=_POSITION_Y, color=_COLOR, opacity=_OPACITY)
 _POSITIONAL_ARGUMENTS = {}
 _WATERMARK = dict(help='Watermark PDF documents!',
                   description='Allows the user to watermark multiple documents at once.',
