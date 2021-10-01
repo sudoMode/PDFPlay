@@ -1,0 +1,12 @@
+# readme
+include README.md
+
+# license
+include LICENSE
+
+# setup
+include setup.cfg
+include setup.py
+
+# data
+recursive-include source/pdf_play/.data *
