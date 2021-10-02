@@ -1,11 +1,11 @@
-from PyPDF4.pdf import PdfFileReader
-from PyPDF4.pdf import PdfFileWriter
+from pdf_play.core._pdf import PDF
 
-from watermark_pdf.__settings__ import COLORS
-from watermark_pdf.__settings__ import DEFAULT_COLOR
-from watermark_pdf.__settings__ import DEFAULT_PAGE_SIZE
-from watermark_pdf.__settings__ import PAGES
-from watermark_pdf.core.water_mark import Watermark
+# __all__ = ['PDF']
+client = PDF()
 
-__all__ = ['COLORS', 'DEFAULT_COLOR', 'DEFAULT_PAGE_SIZE', 'PAGES', 'PdfFileReader',
-           'PdfFileWriter', 'Watermark']
+
+def watermark(text='', target_file=None, output_file=None, **style):
+    client.apply_watermark(text, target_file, output_file, **style)
+
+
+__all__ = ['watermark']
