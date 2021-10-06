@@ -4,8 +4,9 @@ from pdf_play.helpers import parse_user_args
 
 
 def main():
-    print('main...')
+    print('Called  main...')
     args = parse_user_args()
+    # args.target_file = settings.INPUT_FILE
     print(f'User Args: {args}')
     # _command = args.command
     # del args.command
@@ -14,7 +15,6 @@ def main():
 
 
 def _test():
-    print('testing...')
     command = ['watermark',
                '-t', 'singh.mandeep2207@gmail.com',
                '-tf', settings.INPUT_FILE2,
