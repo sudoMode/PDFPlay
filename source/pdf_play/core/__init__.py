@@ -1,7 +1,7 @@
 from pdf_play.core._pdf import PDF
 
 # __all__ = ['PDF']
-client = PDF()
+client = PDF(debug=True)
 
 
 def watermark(text='', target_file=None, output_file=None, **style):

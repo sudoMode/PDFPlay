@@ -1,3 +1,4 @@
+from reportlab.lib import pagesizes as ps
 from reportlab.lib.colors import Color
 
 _COLORS = {
@@ -6,7 +7,6 @@ _COLORS = {
 }
 
 _PAGES = {
-    None: (595.2755905511812, 841.8897637795277),  # default  -> A4
     'A0': (2383.937007874016, 3370.393700787402),
     'A1': (1683.7795275590554, 2383.937007874016),
     'A10': (73.70078740157481, 104.88188976377954),
@@ -55,15 +55,34 @@ _PAGES = {
 
 _FONTS = ['Helvetica']
 
+_ROTATION = {
+    1: 60,
+    2: ''
+}
+
 
 def get_font(name):
     assert name in _FONTS, f'Font: "{name}" is not supported yet, pick from: {_FONTS}'
     return name
 
 
-def get_color(color, transparency):
+def get_color(color, transparency=0):
     return Color(*_COLORS[color], alpha=(1 - (transparency / 100)))
 
 
 def get_page(size):
-    return _PAGES[size]
+    page_size = _PAGES['A4']
+    if isinstance(size, list):
+        assert len(size) == 2, f'Invalid page size: {size}, should be a list with two ' \
+                               f'integer values. Exmaple --> [600, 800]'
+        page_size = size
+
+    if isinstance(size, str):
+        supported = list(_PAGES.keys())
+        assert size in supported, f'Invalid page size: {size}, pick from: {supported}'
+        page_size = _PAGES[size]
+    return page_size
+
+
+def get_rotation(orientation):
+    return _ROTATION[orientation]

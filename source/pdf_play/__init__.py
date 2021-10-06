@@ -2,19 +2,35 @@ from pdf_play import __settings__ as settings
 from pdf_play.core import watermark
 from pdf_play.helpers import parse_user_args
 
-command = ['watermark', '-t', 'dummy watermark text!', '-tf', f'{settings.INPUT_FILE}']
-args = parse_user_args(command)
-# TODO: temporary
-
-command = args.command
-del args.command
-
 
 def main():
-    # print(f'User Args: {args}')
-    if command == 'watermark':
-        watermark(**vars(args))
+    print('main...')
+    args = parse_user_args()
+    print(f'User Args: {args}')
+    # _command = args.command
+    # del args.command
+    # if _command == 'watermark':
+    #     watermark(**vars(args))
+
+
+def _test():
+    print('testing...')
+    command = ['watermark',
+               '-t', 'singh.mandeep2207@gmail.com',
+               '-tf', settings.INPUT_FILE2,
+               '-fs', 'large',
+               '-ta', 'diagonal',
+               '-px', 'center',
+               '-py', 'center',
+               '-fn', 'Helvetica-Bold']
+    args = parse_user_args(command)
+    print(f'User Args: {args}')
+    return
+    # _command = args.command
+    # del args.command
+    # if _command == 'watermark':
+    #     watermark(**vars(args))
 
 
 if __name__ == '__main__':
-    main()
+    _test()
