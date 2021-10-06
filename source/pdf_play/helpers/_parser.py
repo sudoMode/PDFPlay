@@ -10,6 +10,7 @@ from os import listdir
 from os.path import isfile
 from os.path import isdir
 from os import makedirs
+from os.path import join
 from os.path import sep
 from pathlib import Path
 
@@ -26,36 +27,42 @@ def _validate_otm(args):
             makedirs(args.output_file)
 
 
+def _validate_mto(args):
+    _validate_otm(args)
+
+
 def _validate_oto(args):
-    if isfile(args.output_file):
-        print(f'An output file with the same name already exists: {args.output_file}')
-        _input = input('Would you like to over-write the same? (yes/no): ')
-        if _input != 'yes':
-            base = Path(args.output_file).parent.resolve()
-            file_name = args.output_file.split(sep)[-1]
-            name, extension = file_name.split('.')
-            total_files = len(list(filter(lambda x: name in x and extension in x, listdir(
-                base))))
-            split = args.output_file.split('.')
-            name, extension = sep.join(split[:-1]), split[-1]
-            args.output_file = f'{name}({total_files + 1}).{extension}'
+    if args.output_file is None:
+        print('User did not provide an output file, a watermarked copy of the input '
+              'file will be created')
+        base = Path(args.target_file).parent.resolve()
+        file_name = args.target_file.split(sep)[-1]
+        name, extension = file_name.split('.')
+        args.output_file = join(base, f'{name}_watermarked.{extension}')
 
 
-def _update_args(args):
+def _update_args(parser):
+    args = parser.parse_args()
+    print(f'UA: {args}')
+    if args.command is None:
+        print(parser.print_help())
+        exit(0)
     if args.type == 'oto':
         _validate_oto(args)
     if args.type == 'otm':
         _validate_otm(args)
+    if args.type == 'mto':
+        _validate_mto(args)
     return args
 
 
 def parse_user_args(command=None):
     try:
         parser = ArgumentParser(prog='pdf_play',
-                                description='Play with your PDF documents!')
+                                description='A Python utility to manipulate PDF files.')
         commands = parser.add_subparsers(dest='command')
-        watermark = commands.add_parser('watermark', help='WM help!',
-                                        description='WM des!')
+        watermark = commands.add_parser('watermark', help='Watermarks PDF files.',
+                                        description='Watermark PDF files.')
         sub_commands = watermark.add_subparsers(dest='type')
         oto = sub_commands.add_parser('oto', help='one to one help')
         oto.add_argument('--text', '-t', type=str, default='PDFPlay', dest='text',
@@ -115,10 +122,10 @@ def parse_user_args(command=None):
         mto.add_argument('--text-alignment', '-ta', default='diagonal', type=str,
                          choices=['horizontal', 'diagonal'], dest='text_alignment',
                          help='text alignment')
-        args = _update_args(parser.parse_args())
-        return args
+        return _update_args(parser)
     except Exception as e:
         print(f'Error --> Bad user-input: {e}')
+        raise e
 
 
 def _test():
