@@ -31,8 +31,8 @@ def _validate_mto(args):
 
 def _validate_oto(args):
     if args.output_file is None:
-        print('User did not provide an output file, a watermarked copy of the input '
-              'file will be created')
+        print('--> User did not provide an output file, a watermarked copy of the input '
+              'file will be created.')
         base = Path(args.target_file).parent.resolve()
         file_name = args.target_file.split(sep)[-1]
         name, extension = file_name.split('.')
@@ -73,9 +73,9 @@ def parse_user_args(command=None):
                                            'single file. Get help: "python -m pdf_play '
                                            'watermark oto -h"')
         oto.add_argument('--text', '-t', type=str, default='PDFPlay',
-                         dest='text', required=True,
-                         help='Watermark text, must be wrapped inside quotes if it '
-                              'contains white-spaces.')
+                         dest='text', required=True, nargs='+',
+                         action=actions.watermark_text,
+                         help='Text that is to be applied as the watermark.')
         oto.add_argument('--input', '-i', default=None, type=types.target_file_oto,
                          action=actions.target_file_oto, dest='target_file',
                          required=True,
@@ -98,9 +98,8 @@ def parse_user_args(command=None):
                                                   'files. Get help: "python -m pdf_play '
                                                   'watermark otm -h"')
         otm.add_argument('--text', '-t', type=str, default='PDFPlay', dest='text',
-                         required=True,
-                         help='Watermark text, must be wrapped inside quotes if it '
-                              'contains white-spaces.')
+                         required=True, action=actions.watermark_text, nargs='+',
+                         help='Text that is to be applied as the watermark.')
         otm.add_argument('--input', '-i', default=None, type=types.target_file_otm,
                          action=actions.target_file_otm, dest='target_file', nargs='+',
                          required=True,
@@ -109,7 +108,7 @@ def parse_user_args(command=None):
         otm.add_argument('--output', '-o', default=None,
                          type=types.output_file_otm,
                          action=actions.output_file_otm, dest='output_file',
-                         help='Path to directory where you want to save watermarked '
+                         help='Path to the directory where you want to save watermarked '
                               'files, by default a directory called "watermarked" will '
                               'be created in the current working directory.')
         otm.add_argument('--font-name', '-fn', default='Helvetica-Bold', type=str,
@@ -160,8 +159,16 @@ def parse_user_args(command=None):
             print(pdf_play)
             parser.print_help()
             exit(0)
-
-        return _update_args(args)
+        else:
+            if args.type is None:
+                print('User needs to specify the type of operation, run --help / -h '
+                      'against individual commands to know more about available types '
+                      'of operations. Exmaple: "python -m pdf_play watermark -h"')
+                exit(0)
+        updated_args = _update_args(args)
+        print(f'User Args: {updated_args}')
+        exit()
+        return updated_args
     except Exception as e:
         print(f'Error --> Bad user-input: {e}')
         raise e

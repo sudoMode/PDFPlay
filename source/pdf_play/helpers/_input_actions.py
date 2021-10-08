@@ -2,6 +2,8 @@ from argparse import Action
 from os import makedirs
 from os.path import isdir
 from os.path import isfile
+from os.path import sep
+from pathlib import Path
 
 
 def _flatten(nested_list):
@@ -15,6 +17,12 @@ def _flatten(nested_list):
     return values
 
 
+class _WatermarkText(Action):
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        setattr(namespace, self.dest, ' '.join(values))
+
+
 class _TargetFileOTO(Action):
 
     def __call__(self, parser, namespace, values, option_string=None):
@@ -24,6 +32,11 @@ class _TargetFileOTO(Action):
 class _OutputFileOTO(Action):
 
     def __call__(self, parser, namespace, values, option_string=None):
+        base = Path(values).parent.resolve()
+        if not isdir(base):
+            makedirs(base)
+        if not values.endswith('.pdf'):
+            values += '.pdf'
         setattr(namespace, self.dest, values)
 
 
@@ -61,3 +74,4 @@ output_file_oto = _OutputFileOTO
 target_file_otm = _TargetFileOTM
 output_file_otm = _OutputFileOTM
 watermark_mto = _WatermarkMTO
+watermark_text = _WatermarkText

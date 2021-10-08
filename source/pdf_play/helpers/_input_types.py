@@ -4,14 +4,13 @@ from argparse import ArgumentTypeError
 from os.path import isdir
 from os.path import join
 from os.path import isfile
+from os.path import sep
 from os import listdir
+from pathlib import Path
 
 
 def _is_pdf(path):
-    # if not isfile(path):
-    #     raise FileExistsError(f'File does not exist: {path}')
-    if path.endswith('.pdf'):
-        return True
+    return path.endswith('.pdf')
 
 
 class _TargetFileOTO:
@@ -25,7 +24,13 @@ class _TargetFileOTO:
 class _OutputFileOTO:
 
     def __call__(self, path):
-        _is_pdf(path)
+        print(f'P: {path}')
+        if not _is_pdf(path):
+            name_and_extension = path.split(sep)[-1].split('.')
+            if len(name_and_extension) == 2:
+                extension = name_and_extension[-1]
+                if extension != 'pdf':
+                    raise ArgumentTypeError(f'Expected a PDF file, received: {path}')
         return path
 
 
@@ -47,9 +52,13 @@ class _TargetFileOTM:
 class _OutputFileOTM:
 
     def __call__(self, path):
-        if _is_pdf(path):
-            raise ArgumentTypeError(f'Output location must be a directory, not a PDF '
-                                    f'file: {path}')
+        if isfile(path):
+            raise ArgumentTypeError(f'Output location must be a directory, not a file: '
+                                    f'{path}')
+        name_and_extension = path.split(sep)[-1].split('.')
+        if len(name_and_extension) == 2:
+            raise ArgumentTypeError(f'Output location must be a directory, not a file: '
+                                    f'{path}')
         return path
 
 
