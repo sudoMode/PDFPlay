@@ -56,11 +56,12 @@ class _OutputFileOTM:
 class _WatermarkMTO:
 
     def __call__(self, path):
-        if not isfile(path):
-            raise FileExistsError(f'File does not exist: {path}')
-        if not path.endswith('.txt'):
-            raise ArgumentTypeError(f'Watermark input must be a path to a .txt file '
-                                    f'that contains watermark texts, received: {path}')
+        # if not isfile(path):
+        #     raise FileExistsError(f'File does not exist: {path}')
+        # if not(path.endswith('.txt') or path.endswith('.rtf')):
+        #     raise ArgumentTypeError(f'Watermark input must be a path to a .txt or '
+        #                             f'.rtf file that contains watermark texts, '
+        #                             f'received: {path}')
         return path
 
 

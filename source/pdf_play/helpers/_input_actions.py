@@ -1,6 +1,7 @@
 from argparse import Action
 from os import makedirs
 from os.path import isdir
+from os.path import isfile
 
 
 def _flatten(nested_list):
@@ -45,8 +46,14 @@ class _OutputFileOTM(Action):
 class _WatermarkMTO(Action):
 
     def __call__(self, parser, namespace, values, option_string=None):
-        with open(values, 'r') as f:
-            setattr(namespace, self.dest, f.read().splitlines())
+        values_ = []
+        for v in values:
+            if isfile(v):
+                with open(v, 'r') as f:
+                    values_.extend(f.read().splitlines())
+            else:
+                values_.append(v)
+        setattr(namespace, self.dest, values_)
 
 
 target_file_oto = _TargetFileOTO
