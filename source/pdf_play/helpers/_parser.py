@@ -54,8 +54,8 @@ def parse_user_args(command=None):
         parser = ArgumentParser(prog='pdf_play',
                                 description='A Python utility to manipulate PDF '
                                             'documents.',
-                                epilog='''NOTE: Run --help / -h against individual 
-                                commands 
+                                epilog='''--> User must specify a command, run --help / -h 
+                                against individual commands 
                                 to get more info.\nExample: pdf_play 
                                 watermark -h''')
         commands = parser.add_subparsers(dest='command', help='Commands available in '
@@ -153,6 +153,14 @@ def parse_user_args(command=None):
                          choices=['horizontal', 'diagonal'], dest='text_alignment',
                          help='Alignment of the watermark in the document.')
         args = parser.parse_args()
+
+        if args.command is None:
+            pdf_play = f'''\n{"-"*100}\n{"*"*30}{" "*16}PDF-Play{" "*16}{"*"*30
+            }\n{"-"*100}\n'''
+            print(pdf_play)
+            parser.print_help()
+            exit(0)
+
         return _update_args(args)
     except Exception as e:
         print(f'Error --> Bad user-input: {e}')

@@ -4,7 +4,6 @@ from pdf_play.helpers import parse_user_args
 
 
 def main():
-    print('Called  main...')
     args = parse_user_args()
     # args.target_file = settings.INPUT_FILE
     print(f'User Args: {args}')
