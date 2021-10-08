@@ -17,12 +17,12 @@ from pdf_play.helpers import _input_types as types
 
 
 def _validate_otm(args):
-    if args.output_file is None:
-        args.output_file = 'watermarked'
-        if not isdir(args.output_file):
+    if args.output_directory is None:
+        args.output_directory = 'watermarked'
+        if not isdir(args.output_directory):
             print('User did not provide an output location, a directory called '
                   '"watermarked" will be created to store all the watermarked PDF(s).')
-            makedirs(args.output_file)
+            makedirs(args.output_directory)
 
 
 def _validate_mto(args):
@@ -101,13 +101,13 @@ def parse_user_args(command=None):
                          required=True, action=actions.watermark_text, nargs='+',
                          help='Text that is to be applied as the watermark.')
         otm.add_argument('--input', '-i', default=None, type=types.target_file_otm,
-                         action=actions.target_file_otm, dest='target_file', nargs='+',
+                         action=actions.target_file_otm, dest='target_files', nargs='+',
                          required=True,
                          help='Paths to PDF files or to directories that contain PDF '
                               'files, mulitple values are allowed.')
         otm.add_argument('--output', '-o', default=None,
                          type=types.output_file_otm,
-                         action=actions.output_file_otm, dest='output_file',
+                         action=actions.output_file_otm, dest='output_directory',
                          help='Path to the directory where you want to save watermarked '
                               'files, by default a directory called "watermarked" will '
                               'be created in the current working directory.')
@@ -128,6 +128,7 @@ def parse_user_args(command=None):
         mto.add_argument('--text', '-t', default='PDFPlay',
                          type=types.watermark_mto,
                          action=actions.watermark_mto,
+                         dest='texts',
                          help='Watermark texts or paths to a txt files that contain '
                               'watermark texts.')
         mto.add_argument('--input', '-i', default=None, type=types.target_file_oto,
@@ -136,7 +137,7 @@ def parse_user_args(command=None):
                          help='Path to the PDF file that is to be watermarked.')
         mto.add_argument('--output', '-o', default=None,
                          type=types.output_file_otm,
-                         action=actions.output_file_otm, dest='output_file',
+                         action=actions.output_file_otm, dest='output_directory',
                          help='Path to directory where you want to save watermarked '
                               'files, by default a directory called "watermarked" will '
                               'be created in the current working directory.')
@@ -160,8 +161,8 @@ def parse_user_args(command=None):
         else:
             if args.type is None:
                 print('User needs to specify the type of operation, run --help / -h '
-                      'against individual commands to know more about available types '
-                      'of operations. Exmaple: "python -m pdf_play watermark -h"')
+                      'against individual commands to know more.'
+                      ' Exmaple: "python -m pdf_play watermark -h"')
                 exit(0)
         updated_args = _update_args(args)
         print(f'User Args: {updated_args}')

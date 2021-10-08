@@ -1,10 +1,10 @@
 from pdf_play.core._pdf import PDF
 
 # __all__ = ['PDF']
-client = PDF(debug=True)
+client = PDF()
 
 
-def watermark(text='', target_file=None, output_file=None, **style):
+def watermark(text, target_file, output_file, **style):
     client.apply_watermark(text, target_file, output_file, **style)
 
 
