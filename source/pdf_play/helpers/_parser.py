@@ -128,8 +128,6 @@ def parse_user_args(command=None):
         mto.add_argument('--text', '-t', default='PDFPlay',
                          type=types.watermark_mto,
                          action=actions.watermark_mto,
-                         dest='text', nargs='+',
-                         required=True,
                          help='Watermark texts or paths to a txt files that contain '
                               'watermark texts.')
         mto.add_argument('--input', '-i', default=None, type=types.target_file_oto,
