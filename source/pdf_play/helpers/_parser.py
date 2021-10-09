@@ -31,8 +31,8 @@ def _validate_mto(args):
 
 def _validate_oto(args):
     if args.output_file is None:
-        print('--> User did not provide an output file, a watermarked copy of the input '
-              'file will be created.')
+        # print('--> User did not provide an output file, a watermarked copy of the input '
+        #       'file will be created.')
         base = Path(args.target_file).parent.resolve()
         file_name = args.target_file.split(sep)[-1]
         name, extension = file_name.split('.')
@@ -169,6 +169,68 @@ def parse_user_args(command=None):
     except Exception as e:
         print(f'Error --> Bad user-input: {e}')
         raise e
+
+
+def parse_watermark_args():
+    try:
+        parser = ArgumentParser(prog='pdf_play',
+                                description='A Python utility to watermark PDF '
+                                            'documents.',
+                                epilog='''--> User must specify the type of operation 
+                                followed by positional / optional arguments, 
+                                run --help / -h to get more info. 
+                                Example: watermark -h''')
+        commands = parser.add_subparsers(dest='type', help='Types of watermarking '
+                                                           'options.')
+        oto = commands.add_parser('oto',
+                                  help='One-To-One: Apply watermark text to a '
+                                       'single file. Get help: "python -m pdf_play '
+                                       'watermark oto -h"')
+        oto.add_argument('--text', '-t', type=str, default='PDFPlay',
+                         dest='text', required=True, nargs='+',
+                         action=actions.watermark_text,
+                         help='Text that is to be applied as the watermark.')
+        oto.add_argument('--input', '-i', default=None, type=types.target_file_oto,
+                         action=actions.target_file_oto, dest='target_file',
+                         required=True,
+                         help='Path to the PDF file that is to be watermarked.')
+        oto.add_argument('--output', '-o', default=None, type=types.output_file_oto,
+                         action=actions.output_file_oto, dest='output_file',
+                         help='Name of the output file, by default '
+                              '"{input-file}_watermarked.pdf" will be generated.')
+        oto.add_argument('--font-name', '-fn', default='Helvetica-Bold', type=str,
+                         choices=['Helvetica-Bold'], dest='font_name',
+                         help='Name of the font that you want to use in the watermark.')
+        oto.add_argument('--font-size', '-fs', default='medium', type=str,
+                         choices=['small', 'medium', 'large'], dest='font_size',
+                         help='Size of the font.')
+        oto.add_argument('--text-alignment', '-ta', default='diagonal', type=str,
+                         choices=['horizontal', 'diagonal'], dest='text_alignment',
+                         help='Alignment of the watermark in the document.')
+
+        args = parser.parse_args()
+        return args
+    except Exception as e:
+        print(f'Error --> Bad user-input: {e}')
+        raise e
+
+
+def parse_command():
+    parser = ArgumentParser(prog='pdf_play',
+                            description='A Python utility to manipulate PDF '
+                                        'documents.',
+                            epilog='''--> User must specify a command, run --help / -h 
+                                    against individual commands 
+                                    to get more info.\nExample: pdf_play 
+                                    watermark -h''')
+    parser.add_argument('command', default='watermark',
+                        choices=['watermark'], help='top command')
+
+    args = parser.parse_args()
+    if args.command is None:
+        print('no command found...')
+        exit()
+    return args
 
 
 def _test():
