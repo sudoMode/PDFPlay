@@ -1,7 +1,6 @@
 from pdf_play import __settings__ as settings
 from pdf_play.core import watermark
 from pdf_play.helpers import parse_user_args
-from pdf_play.helpers import parse_command
 from pdf_play.helpers import parse_watermark_args
 
 # args = parse_user_args()
@@ -38,6 +37,8 @@ def _watermark_oto(text='PDFPlay', target_file=None, output_file=None,
 def _watermark(args=None):
     if args is None:
         args = parse_watermark_args()
+    print('going to watermark now...')
+    print(f'User Args: {args}')
     # type_ = args.type
     # del args.command
     # del args.type
@@ -46,6 +47,8 @@ def _watermark(args=None):
 
 
 def main():
+    print('called main...')
     args = parse_user_args()
-    command_map = dict(watermark=_watermark)
-    command_map[args.command](args)
+    print(f'User Args: {args}')
+    # command_map = dict(watermark=_watermark)
+    # command_map[args.command](args)
