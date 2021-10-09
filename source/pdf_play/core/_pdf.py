@@ -43,6 +43,12 @@ class PDF:
 
     def _set_watermark(self, **style):
         style['page_size'] = self._target.getPage(0).mediaBox[-2:]
+        print(f'Style: {style}')
+        # x = 600
+        # y = x * 1.4
+        # style['page_size'] = [x, y]
+        x, y = style['page_size']
+        print(f'R: {round(y / x, 3)}')
         watermark = Watermark(self._watermark_text, **style)
         self._watermark = watermark.unload()
         self._watermark_is_loaded = True

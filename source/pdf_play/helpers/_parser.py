@@ -87,7 +87,7 @@ def parse_user_args(command=None):
         oto.add_argument('--font-name', '-fn', default='Helvetica-Bold', type=str,
                          choices=['Helvetica-Bold'], dest='font_name',
                          help='Name of the font that you want to use in the watermark.')
-        oto.add_argument('--font-size', '-fs', default='small', type=str,
+        oto.add_argument('--font-size', '-fs', default='medium', type=str,
                          choices=['small', 'medium', 'large'], dest='font_size',
                          help='Size of the font.')
         oto.add_argument('--text-alignment', '-ta', default='diagonal', type=str,
@@ -114,7 +114,7 @@ def parse_user_args(command=None):
         otm.add_argument('--font-name', '-fn', default='Helvetica-Bold', type=str,
                          choices=['Helvetica-Bold'], dest='font_name',
                          help='Name of the font that you want to use in the watermark.')
-        otm.add_argument('--font-size', '-fs', default='small', type=str,
+        otm.add_argument('--font-size', '-fs', default='medium', type=str,
                          choices=['small', 'medium', 'large'], dest='font_size',
                          help='Size of the font.')
         otm.add_argument('--text-alignment', '-ta', default='diagonal', type=str,
@@ -144,7 +144,7 @@ def parse_user_args(command=None):
         mto.add_argument('--font-name', '-fn', default='Helvetica-Bold', type=str,
                          choices=['Helvetica-Bold'], dest='font_name',
                          help='Name of the font that you want to use in the watermark.')
-        mto.add_argument('--font-size', '-fs', default='small', type=str,
+        mto.add_argument('--font-size', '-fs', default='medium', type=str,
                          choices=['small', 'medium', 'large'], dest='font_size',
                          help='Size of the font.')
         mto.add_argument('--text-alignment', '-ta', default='diagonal', type=str,
@@ -165,8 +165,6 @@ def parse_user_args(command=None):
                       ' Exmaple: "python -m pdf_play watermark -h"')
                 exit(0)
         updated_args = _update_args(args)
-        print(f'User Args: {updated_args}')
-        exit()
         return updated_args
     except Exception as e:
         print(f'Error --> Bad user-input: {e}')
