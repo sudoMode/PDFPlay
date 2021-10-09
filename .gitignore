@@ -1,1 +1,11 @@
+# dirs
 .idea/
+venv/
+dist/
+*.egg-info
+source/__pycache__/
+source/pdf_play/__pycache/
+
+# files
+*.pdf
+*.pyc
