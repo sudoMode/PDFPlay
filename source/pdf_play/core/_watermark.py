@@ -1,10 +1,11 @@
 from io import BytesIO
-import math
+from math import atan
+from math import degrees
+from math import sqrt
 from PyPDF4.pdf import PdfFileReader
 from reportlab.pdfgen.canvas import Canvas
 
 from reportlab.lib.colors import Color
-from math import tanh
 
 
 # noinspection PyTypeChecker
@@ -36,7 +37,7 @@ class Watermark:
         x, y = list(map(float, self._page_size))
         rotation = 0
         if self._text_alignment == 'diagonal':
-            rotation = round(math.degrees(math.atan(y / x)))
+            rotation = round(degrees(atan(y / x)))
         if self._text_alignment == 'vertical':
             rotation = 90
         self._rotation = rotation
@@ -45,7 +46,7 @@ class Watermark:
         x, y = list(map(int, self._page_size))
         length = round(x * .8)
         if self._text_alignment == 'diagonal':
-            length = round(math.sqrt(x**2 + y**2) * .8)
+            length = round(sqrt(x**2 + y**2) * .8)
         if self._text_alignment == 'vertical':
             length = round(y * .8)
         self._max_length = length
@@ -82,21 +83,17 @@ class Watermark:
         self._color = Color()
 
     def _set_position(self):
-        self._x = 0  # round(self._page_size[0] // 2)
-        self._y = 0  # round(self._page_size[1] // 2)
-        if self._text_alignment == 'horizontal':
-            pass
-        if self._text_alignment == 'diagonal':
-            pass
-            # self._x += self._x
-            # self._y -= self._y
+        # set to origin
+        self._x = 0
+        self._y = 0
 
     def _update_canvas(self):
+        # update canvas attrs
         self._canvas.setPageSize(self._page_size)
         self._canvas.setFont(self._font_name, self._font_size)
         self._canvas.setFillColor(self._color)
-        # if self._text_alignment == 'diagonal':
         x, y = list(map(int, self._page_size))
+        # set origin to center of the page
         self._canvas.translate(x // 2, y // 2)
         self._canvas.rotate(self._rotation)
         self._canvas.drawCentredString(self._x, -.25 * self._font_size,
