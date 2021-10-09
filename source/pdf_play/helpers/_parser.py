@@ -55,13 +55,14 @@ def _update_args(args):
 
 def _validate_args(parser, args):
     if args.command is None:
-        print(pdf_play)
+        # print(pdf_play)
         parser.print_help()
         exit(0)
     else:
         if args.type is None:
             print(f'User must specify the type of operation, run "python -m pdf_play '
                   f'{args.command} -h" to know more.')
+            exit(0)
 
 
 def parse_user_args(command=None):
@@ -167,25 +168,25 @@ def parse_user_args(command=None):
         #                  help='Alignment of the watermark in the document.')
         args = parser.parse_args() if command is None else parser.parse_args(command)
         _validate_args(parser, args)
-        # args = _update_args(args)
+        args = _update_args(args)
         return args
     except Exception as e:
         print(f'Error --> Bad user-input: {e}')
         raise e
 
 
-def parse_watermark_args(parser=None):
+def parse_watermark_args():
     try:
-        if parser is None:
-            parser = ArgumentParser(prog='pdf_play',
-                                    description='A Python utility to watermark PDF '
+        parser = ArgumentParser(prog='pdf_play',
+                                description='A Python utility to watermark PDF '
                                                 'documents.',
-                                    epilog='''--> User must specify the type of operation 
+                                epilog='''--> User must specify the type of operation 
                                     followed by positional / optional arguments, 
                                     run --help / -h to get more info. 
                                     Example: watermark -h''')
-        commands = parser.add_subparsers(dest='type', help='Types of watermarking '
-                                                           'options.')
+        commands = parser.add_subparsers(dest='type', help='Types of operations '
+                                                           'for watermarking PDF '
+                                                           'files.')
         oto = commands.add_parser('oto',
                                   help='One-To-One: Apply watermark text to a '
                                        'single file. Get help: "python -m pdf_play '
@@ -213,10 +214,9 @@ def parse_watermark_args(parser=None):
                          help='Alignment of the watermark in the document.')
 
         args = parser.parse_args()
-        if args.type is None:
-            print('No type :(')
-            parser.print_help()
-            exit(0)
+        args.command = 'watermark'
+        _validate_args(parser, args)
+        args = _update_args(args)
         return args
     except Exception as e:
         print(f'Error --> Bad user-input: {e}')

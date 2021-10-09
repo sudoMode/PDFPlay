@@ -29,7 +29,6 @@ def _watermark_otm(text='PDFPlay', target_files=None, output_directory=None,
 def _watermark_oto(text='PDFPlay', target_file=None, output_file=None,
                    font_name='Helvetica-Bold',
                    font_size='medium', text_alignment='diagonal'):
-    print('called...')
     watermark(text, target_file, output_file, font_name=font_name, font_size=font_size,
               text_alignment=text_alignment)
 
@@ -37,18 +36,16 @@ def _watermark_oto(text='PDFPlay', target_file=None, output_file=None,
 def _watermark(args=None):
     if args is None:
         args = parse_watermark_args()
-    print('going to watermark now...')
-    print(f'User Args: {args}')
-    # type_ = args.type
-    # del args.command
-    # del args.type
-    # type_map = dict(oto=_watermark_oto, otm=_watermark_otm, mto=_watermark_mto)
-    # type_map[type_](**vars(args))
+    print(f'Watermark args: {args}')
+    type_ = args.type
+    del args.type
+    del args.command
+    type_map = dict(oto=_watermark_oto, otm=_watermark_otm, mto=_watermark_mto)
+    type_map[type_](**vars(args))
 
 
 def main():
-    print('called main...')
     args = parse_user_args()
-    print(f'User Args: {args}')
-    # command_map = dict(watermark=_watermark)
-    # command_map[args.command](args)
+    # print(f'User Args: {args}')
+    command_map = dict(watermark=_watermark)
+    command_map[args.command](args)
