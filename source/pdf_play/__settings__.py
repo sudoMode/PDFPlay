@@ -9,5 +9,5 @@ FONTS = ['Courier', 'Courier-Bold', 'Courier-BoldOblique', 'Courier-Oblique', 'H
          'Times-Bold', 'Times-BoldItalic', 'Times-Italic', 'Times-Roman']
 FONT_SIZES = ['small', 'large', 'medium']
 COLORS = ['black', 'grey', 'lightgrey', 'red', 'lightred', 'blue', 'lightblue', 'green',
-         'lightgreen',
+          'lightgreen',
           'white']

@@ -16,7 +16,6 @@ class Watermark:
                  font_size='medium',
                  text_alignment='diagonal', font_color='black', position_x='center',
                  position_y='center'):
-        # TODO: think...
         self._page_size = page_size
         self._font_name = font_name
         self._font_size = font_size

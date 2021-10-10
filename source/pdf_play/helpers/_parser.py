@@ -12,11 +12,11 @@ from os.path import join
 from os.path import sep
 from pathlib import Path
 
-from pdf_play.helpers import _input_actions as actions
-from pdf_play.helpers import _input_types as types
+from pdf_play.__settings__ import COLORS
 from pdf_play.__settings__ import FONTS
 from pdf_play.__settings__ import FONT_SIZES
-from pdf_play.__settings__ import COLORS
+from pdf_play.helpers import _input_actions as actions
+from pdf_play.helpers import _input_types as types
 
 _pdf_play = f'''\n{"-" * 100}\n{"*" * 30}{" " * 16}PDF-Play{" " * 16}{"*" * 30
 }\n{"-" * 100}\n'''
@@ -302,8 +302,8 @@ def parse_watermark_args():
                                               different watermark texts.""",
                                       epilog="""--> Sample usage: watermark mto -t 
                                               'watermark text#1' 'watermark text#2' 
-                                              'MyPC/SampleWatermarks/sample1.txt' -i 'sample.pdf'
-                                              """)
+                                              'MyPC/SampleWatermarks/sample1.txt' -i 
+                                              'sample.pdf'""")
         mto.add_argument('-t', '--text', default='PDFPlay',
                          type=types.watermark_mto,
                          action=actions.watermark_mto,
