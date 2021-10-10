@@ -263,8 +263,7 @@ def parse_watermark_args():
                                   epilog='''--> Sample usage: watermark mto -t 
                                               'watermark text#1' 'watermark text#2' 
                                               'MyPC/SampleWatermarks/sample1.txt' -i 
-                                              sample.pdf
-                                              \n test''')
+                                              sample.pdf''')
         mto.add_argument('--text', '-t', default='PDFPlay',
                          type=types.watermark_mto,
                          action=actions.watermark_mto,
