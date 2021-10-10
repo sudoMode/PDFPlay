@@ -73,16 +73,16 @@ def parse_user_args(command=None):
                                 description='A Python utility to watermark PDF '
                                             'documents.',
                                 epilog='''--> Run -h/--help against indivdual commands to 
-                                get more details. Example: "python -m pdf_play watermark 
-                                -h"''')
+                                get more details. Example: watermark -h''')
         commands = parser.add_subparsers(dest='command',
                                          help='''Commands available in PDF-Play, 
                                          currently there's just one :(''')
         watermark = commands.add_parser('watermark', help='Watermarks PDF files.',
                                         description='Apply watermarks to PDF '
                                                     'files.',
-                                        epilog='''--> Sample usage: python -m pdf_play 
-                                        watermark oto -h''')
+                                        epilog='''--> Run -h/--help against positional 
+                                        arguments to get more details. Example: watermark 
+                                        oto -h''')
         sub_commands = watermark.add_subparsers(dest='type',
                                                 help='''Modes of operation for 
                                                      watermarking PDF files.''')
@@ -91,9 +91,8 @@ def parse_user_args(command=None):
                                            single file.''',
                                       description='''One-To-One: Use this mode when you 
                                       have got a single target file.''',
-                                      epilog='''--> Sample Usage: python -m pdf_play 
-                                             watermark oto -t this is my watermark 
-                                             text -i sample.pdf''')
+                                      epilog='''--> Sample Usage: watermark oto -t this 
+                                      is my watermark text -i sample.pdf''')
         oto.add_argument('--text', '-t', type=str, default='PDFPlay',
                          dest='text', required=True, nargs='+',
                          action=actions.watermark_text,
@@ -101,7 +100,8 @@ def parse_user_args(command=None):
         oto.add_argument('--input', '-i', default=None, type=types.target_file_oto,
                          action=actions.target_file_oto, dest='target_file',
                          required=True,
-                         help='(**) Path to the PDF file that is to be watermarked.')
+                         help='(**) Path to the PDF file that is to be '
+                              'watermarked.')
         oto.add_argument('--output', '-o', default=None, type=types.output_file_oto,
                          action=actions.output_file_oto, dest='output_file',
                          help='Name of the output file, by default '
@@ -120,10 +120,9 @@ def parse_user_args(command=None):
                                                   'multiple files.',
                                       description='One-To-Many: Use this mode when you '
                                                   'have got multiple target files.',
-                                      epilog='''--> Sample Usage: python -m pdf_play
-                                             watermark otm -t this is my watermark
-                                             text -i sample1.pdf sample2.pdf
-                                             MyPC/Downloads/PDFFiles ''')
+                                      epilog='''--> Sample Usage: watermark otm -t this 
+                                      is my watermark text -i sample1.pdf sample2.pdf 
+                                      MyPC/Downloads/PDFFiles ''')
         otm.add_argument('--text', '-t', type=str, default='PDFPlay', dest='text',
                          required=True, action=actions.watermark_text, nargs='+',
                          help='(**) Text that is to be applied as the watermark.')
@@ -194,8 +193,9 @@ def parse_watermark_args():
         parser = ArgumentParser(prog='watermark',
                                 description='A Python utility to watermark PDF '
                                             'documents.',
-                                epilog='''--> Run -h/--help to get more details. 
-                                Example: "watermark -h"''')
+                                epilog='''--> Run -h/--help against positional 
+                                        arguments to get more details. Example: watermark 
+                                        oto -h''')
         commands = parser.add_subparsers(dest='type',
                                          help='''Modes of operation for 
                                                  watermarking PDF files.''')
@@ -204,9 +204,8 @@ def parse_watermark_args():
                                                    single file.''',
                                   description='''One-To-One: Use this mode when you 
                                               have got a single target file.''',
-                                  epilog='''--> Sample Usage: python -m pdf_play 
-                                                     watermark oto -t this is my watermark 
-                                                     text -i sample.pdf''')
+                                  epilog='''--> Sample Usage: watermark oto -t this 
+                                              is my watermark text -i sample.pdf''')
         oto.add_argument('--text', '-t', type=str, default='PDFPlay',
                          dest='text', required=True, nargs='+',
                          action=actions.watermark_text,
@@ -214,7 +213,8 @@ def parse_watermark_args():
         oto.add_argument('--input', '-i', default=None, type=types.target_file_oto,
                          action=actions.target_file_oto, dest='target_file',
                          required=True,
-                         help='(**) Path to the PDF file that is to be watermarked.')
+                         help='(**) Path to the PDF file that is to be '
+                              'watermarked.')
         oto.add_argument('--output', '-o', default=None, type=types.output_file_oto,
                          action=actions.output_file_oto, dest='output_file',
                          help='Name of the output file, by default '
@@ -229,14 +229,13 @@ def parse_watermark_args():
                          choices=['horizontal', 'diagonal'], dest='text_alignment',
                          help='Alignment of the watermark in the document.')
 
-        otm = commands.add_parser('otm',
-                                  help='One-To-Many: Apply watermark to multiple files.',
+        otm = commands.add_parser('otm', help='One-To-Many: Apply watermark to '
+                                              'multiple files.',
                                   description='One-To-Many: Use this mode when you '
                                               'have got multiple target files.',
-                                  epilog='''--> Sample Usage: python -m pdf_play
-                                             watermark otm -t this is my watermark
-                                             text -i sample1.pdf sample2.pdf
-                                             MyPC/Downloads/PDFFiles ''')
+                                  epilog='''--> Sample Usage: watermark otm -t this 
+                                              is my watermark text -i sample1.pdf sample2.pdf 
+                                              MyPC/Downloads/PDFFiles ''')
         otm.add_argument('--text', '-t', type=str, default='PDFPlay', dest='text',
                          required=True, action=actions.watermark_text, nargs='+',
                          help='(**) Text that is to be applied as the watermark.')
@@ -244,7 +243,7 @@ def parse_watermark_args():
                          action=actions.target_file_otm, dest='target_files', nargs='+',
                          required=True,
                          help='''(**) Paths to files/directories that contain
-                         your target files.''')
+                                 your target files.''')
         otm.add_argument('--output', '-o', default=None,
                          type=types.output_file_otm,
                          action=actions.output_file_otm, dest='output_directory',
