@@ -1,7 +1,0 @@
-watermark alignment:
-    - position:
-        - X: left | right | center
-        - Y: top | bottom | center
-    - rotation:
-        - 1: 30
-        - 2: 60
