@@ -1,6 +1,6 @@
 from os.path import join
 from os.path import sep
-from pathlib import Path
+
 from pdf_play import __settings__ as settings
 from pdf_play.core import watermark
 from pdf_play.helpers import parse_user_args
@@ -10,7 +10,10 @@ from pdf_play.helpers import parse_watermark_args
 def _watermark_mto(texts=('PDFPlay',), target_file=None, output_directory=None,
                    font_name='Helvetica-Bold',
                    font_size='medium', text_alignment='diagonal'):
-    raise NotImplementedError('To be implemented...')
+    for text in texts:
+        output_file = join(output_directory, f'{text}.pdf')
+        watermark(text, target_file, output_file, font_name=font_name,
+                  font_size=font_size, text_alignment=text_alignment)
 
 
 def _watermark_otm(text='PDFPlay', target_files=None, output_directory=None,
@@ -37,7 +40,7 @@ def _watermark(args=None):
     type_ = args.type
     del args.type
     del args.command
-    type_map = dict(oto=_watermark_oto, otm=_watermark_otm)
+    type_map = dict(oto=_watermark_oto, otm=_watermark_otm, mto=_watermark_mto)
     type_map[type_](**vars(args))
 
 

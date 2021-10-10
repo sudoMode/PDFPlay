@@ -4,6 +4,7 @@ from os import makedirs
 from os.path import isdir
 from os.path import join
 from os.path import sep
+from os.path import isfile
 from pathlib import Path
 
 from pdf_play.helpers import utils
@@ -12,7 +13,6 @@ from pdf_play.helpers import utils
 class _WatermarkText(Action):
 
     def __call__(self, parser, namespace, values, option_string=None):
-        print('')
         setattr(namespace, self.dest, ' '.join(values))
 
 
@@ -66,8 +66,14 @@ class _OutputFileOTM(Action):
 class _WatermarkMTO(Action):
 
     def __call__(self, parser, namespace, values, option_string=None):
-        with open(values, 'r') as f:
-            setattr(namespace, self.dest, f.read().splitlines())
+        values_ = []
+        for value in values:
+            if isfile(value):
+                with open(value, 'r') as f:
+                    values_.extend(f.read().splitlines())
+            else:
+                values_.append(value)
+        setattr(namespace, self.dest, values_)
 
 
 target_file_oto = _TargetFileOTO
