@@ -126,7 +126,7 @@ def parse_user_args(command=None):
                          choices=['horizontal', 'diagonal'], dest='text_alignment',
                          help='Alignment of the watermark in the document')
         oto.add_argument('-p', '--print', action='store_true',
-                         default=True, dest='verbose',
+                         default=False, dest='verbose',
                          help='Display informational messages')
 
         otm = sub_commands.add_parser('otm', help='One-To-Many: Apply watermark to '
@@ -161,7 +161,7 @@ def parse_user_args(command=None):
                          choices=['horizontal', 'diagonal'], dest='text_alignment',
                          help='Alignment of the watermark in the document')
         otm.add_argument('-p', '--print', action='store_true',
-                         default=True, dest='verbose',
+                         default=False, dest='verbose',
                          help='Display informational messages')
 
         mto = sub_commands.add_parser('mto', help='Many-To-One: Apply many different '
@@ -200,7 +200,7 @@ def parse_user_args(command=None):
                          choices=['horizontal', 'diagonal'], dest='text_alignment',
                          help='Alignment of the watermark in the document')
         mto.add_argument('-p', '--print', action='store_true',
-                         default=True, dest='verbose',
+                         default=False, dest='verbose',
                          help='Display informational messages')
         args = parser.parse_args() if command is None else parser.parse_args(command)
         _validate_args(parser, args)
@@ -256,7 +256,7 @@ def parse_watermark_args():
                          choices=['horizontal', 'diagonal'], dest='text_alignment',
                          help='Alignment of the watermark in the document')
         oto.add_argument('-p', '--print', action='store_true',
-                         default=True, dest='verbose',
+                         default=False, dest='verbose',
                          help='Display informational messages')
 
         otm = sub_commands.add_parser('otm', help='One-To-Many: Apply watermark to '
@@ -291,7 +291,7 @@ def parse_watermark_args():
                          choices=['horizontal', 'diagonal'], dest='text_alignment',
                          help='Alignment of the watermark in the document')
         otm.add_argument('-p', '--print', action='store_true',
-                         default=True, dest='verbose',
+                         default=False, dest='verbose',
                          help='Display informational messages')
 
         mto = sub_commands.add_parser('mto', help='Many-To-One: Apply many different '
@@ -330,7 +330,7 @@ def parse_watermark_args():
                          choices=['horizontal', 'diagonal'], dest='text_alignment',
                          help='Alignment of the watermark in the document')
         mto.add_argument('-p', '--print', action='store_true',
-                         default=True, dest='verbose',
+                         default=False, dest='verbose',
                          help='Display informational messages')
 
         args = parser.parse_args()
