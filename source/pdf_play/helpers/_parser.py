@@ -39,7 +39,7 @@ def _validate_oto(args):
     if args.output_file is None:
         base = Path(args.target_file).parent.resolve()
         file_name = args.target_file.split(sep)[-1]
-        name, extension = file_name.split('')
+        name, extension = file_name.split('.')
         args.output_file = join(base, f'{name}_watermarked.{extension}')
 
 
