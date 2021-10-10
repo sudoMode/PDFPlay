@@ -104,9 +104,6 @@ PDF files.
    >> watermark -h
 >>```
 >
->> ```python
-   >> watermark oto -h
->>```
 
 ## License
-> ### MIT
+> ### [MIT](https://raw.githubusercontent.com/sudoMode/PDFPlay/master/LICENSE)
