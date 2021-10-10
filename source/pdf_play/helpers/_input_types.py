@@ -16,6 +16,8 @@ def _is_pdf(path):
 class _TargetFileOTO:
 
     def __call__(self, path):
+        if not isfile(path):
+            raise ArgumentTypeError(f'File does not exits: {path}')
         if not _is_pdf(path):
             raise ArgumentTypeError(f'Expected a PDF file, received: {path}')
         return path
