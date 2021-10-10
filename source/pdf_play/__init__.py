@@ -46,6 +46,5 @@ def _watermark(args=None):
 
 def main():
     args = parse_user_args()
-    print(f'User Args: {args}')
     command_map = dict(watermark=_watermark)
     command_map[args.command](args)
