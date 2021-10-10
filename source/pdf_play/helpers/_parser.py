@@ -15,7 +15,6 @@ from pathlib import Path
 from pdf_play.helpers import _input_actions as actions
 from pdf_play.helpers import _input_types as types
 
-
 _pdf_play = f'''\n{"-" * 100}\n{"*" * 30}{" " * 16}PDF-Play{" " * 16}{"*" * 30
 }\n{"-" * 100}\n'''
 
@@ -60,9 +59,9 @@ def _validate_args(parser, args):
         exit(0)
     else:
         if args.type is None:
-            print(f'\n--> User must specify the type of operation, run "python -m '
-                  f'pdf_play '
-                  f'{args.command} -h" to know more.')
+            print('\n--> User must specify the mode of operation when trying to '
+                  f'watermark PDF files. Get help: "python -m pdf_play  {args.command} '
+                  '-h".''')
             exit(0)
 
 
@@ -191,28 +190,30 @@ def parse_user_args(command=None):
 
 def parse_watermark_args():
     try:
-        parser = ArgumentParser(prog='pdf_play',
+        parser = ArgumentParser(prog='watermark',
                                 description='A Python utility to watermark PDF '
-                                                'documents.',
-                                epilog='''--> User must specify the type of operation 
-                                    followed by positional / optional arguments, 
-                                    run --help / -h to get more info. 
-                                    Example: watermark -h''')
-        commands = parser.add_subparsers(dest='type', help='Types of operations '
-                                                           'for watermarking PDF '
-                                                           'files.')
+                                            'documents.',
+                                epilog='''--> Run -h/--help to get more details. 
+                                Example: "watermark -h"''')
+        commands = parser.add_subparsers(dest='type',
+                                         help='''Modes of operation for 
+                                                 watermarking PDF files.''')
         oto = commands.add_parser('oto',
-                                  help='One-To-One: Apply watermark text to a '
-                                       'single file. Get help: "python -m pdf_play '
-                                       'watermark oto -h"')
+                                  help='''One-To-One: Apply watermark text to a 
+                                                   single file.''',
+                                  description='''One-To-One: Use this mode when you 
+                                              have got a single target file.''',
+                                  epilog='''--> Sample Usage: python -m pdf_play 
+                                                     watermark oto -t this is my watermark 
+                                                     text -i sample.pdf''')
         oto.add_argument('--text', '-t', type=str, default='PDFPlay',
                          dest='text', required=True, nargs='+',
                          action=actions.watermark_text,
-                         help='Text that is to be applied as the watermark.')
+                         help='(**) Text that is to be applied as the watermark.')
         oto.add_argument('--input', '-i', default=None, type=types.target_file_oto,
                          action=actions.target_file_oto, dest='target_file',
                          required=True,
-                         help='Path to the PDF file that is to be watermarked.')
+                         help='(**) Path to the PDF file that is to be watermarked.')
         oto.add_argument('--output', '-o', default=None, type=types.output_file_oto,
                          action=actions.output_file_oto, dest='output_file',
                          help='Name of the output file, by default '
