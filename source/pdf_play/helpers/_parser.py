@@ -60,7 +60,7 @@ def _validate_args(parser, args):
         exit(0)
     else:
         if args.type is None:
-            print('\n--> User must specify the mode of operation.'
+            print('\n--> User must specify the mode of operation. '
                   f'Get help: {args.command} -h.')
             exit(0)
 
