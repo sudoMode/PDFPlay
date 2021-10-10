@@ -11,6 +11,7 @@ from os.path import isdir
 from os.path import join
 from os.path import sep
 from pathlib import Path
+from os import getcwd
 
 from pdf_play.__settings__ import COLORS
 from pdf_play.__settings__ import FONTS
@@ -24,7 +25,7 @@ _pdf_play = f'''\n{"-" * 100}\n{"*" * 30}{" " * 16}PDF-Play{" " * 16}{"*" * 30
 
 def _validate_otm(args):
     if args.output_directory is None:
-        args.output_directory = 'watermarked'
+        args.output_directory = join(getcwd(), 'watermarked')
         if not isdir(args.output_directory):
             # print('User did not provide an output location, a directory called '
             #       '"watermarked" will be created to store all the watermarked PDF(s)')
