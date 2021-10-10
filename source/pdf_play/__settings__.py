@@ -7,3 +7,7 @@ DATA = join(BASE, '.data')
 FONTS = ['Courier', 'Courier-Bold', 'Courier-BoldOblique', 'Courier-Oblique', 'Helvetica',
          'Helvetica-Bold', 'Helvetica-BoldOblique', 'Helvetica-Oblique',
          'Times-Bold', 'Times-BoldItalic', 'Times-Italic', 'Times-Roman']
+FONT_SIZES = ['small', 'large', 'medium']
+COLORS = ['black', 'grey', 'lightgrey', 'red', 'lightred', 'blue', 'lightblue', 'green',
+         'lightgreen',
+          'white']
