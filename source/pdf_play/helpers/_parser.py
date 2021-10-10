@@ -26,8 +26,8 @@ def _validate_otm(args):
     if args.output_directory is None:
         args.output_directory = 'watermarked'
         if not isdir(args.output_directory):
-            print('User did not provide an output location, a directory called '
-                  '"watermarked" will be created to store all the watermarked PDF(s).')
+            # print('User did not provide an output location, a directory called '
+            #       '"watermarked" will be created to store all the watermarked PDF(s).')
             makedirs(args.output_directory)
 
 
@@ -60,9 +60,8 @@ def _validate_args(parser, args):
         exit(0)
     else:
         if args.type is None:
-            print('\n--> User must specify the mode of operation when trying to '
-                  f'watermark PDF files. Get help: "python -m pdf_play  {args.command} '
-                  '-h".')
+            print('\n--> User must specify the mode of operation.'
+                  f'Get help: {args.command} -h.')
             exit(0)
 
 
@@ -127,8 +126,8 @@ def parse_user_args(command=None):
                          choices=['horizontal', 'diagonal'], dest='text_alignment',
                          help='Alignment of the watermark in the document.')
         oto.add_argument('-p', '--print', action='store_true',
-                         default=False, dest='verbose',
-                         help='display informational messages')
+                         default=True, dest='verbose',
+                         help='Display informational messages')
 
         otm = sub_commands.add_parser('otm', help='One-To-Many: Apply watermark to '
                                                   'multiple files.',
@@ -162,8 +161,8 @@ def parse_user_args(command=None):
                          choices=['horizontal', 'diagonal'], dest='text_alignment',
                          help='Alignment of the watermark in the document.')
         otm.add_argument('-p', '--print', action='store_true',
-                         default=False, dest='verbose',
-                         help='display informational messages')
+                         default=True, dest='verbose',
+                         help='Display informational messages')
 
         mto = sub_commands.add_parser('mto', help='Many-To-One: Apply many different '
                                                   'watermarks to a single file',
@@ -201,8 +200,8 @@ def parse_user_args(command=None):
                          choices=['horizontal', 'diagonal'], dest='text_alignment',
                          help='Alignment of the watermark in the document.')
         mto.add_argument('-p', '--print', action='store_true',
-                         default=False, dest='verbose',
-                         help='display informational messages')
+                         default=True, dest='verbose',
+                         help='Display informational messages')
         args = parser.parse_args() if command is None else parser.parse_args(command)
         _validate_args(parser, args)
         args = _update_args(args)
@@ -257,8 +256,8 @@ def parse_watermark_args():
                          choices=['horizontal', 'diagonal'], dest='text_alignment',
                          help='Alignment of the watermark in the document.')
         oto.add_argument('-p', '--print', action='store_true',
-                         default=False, dest='verbose',
-                         help='display informational messages')
+                         default=True, dest='verbose',
+                         help='Display informational messages')
 
         otm = sub_commands.add_parser('otm', help='One-To-Many: Apply watermark to '
                                                   'multiple files.',
@@ -292,8 +291,8 @@ def parse_watermark_args():
                          choices=['horizontal', 'diagonal'], dest='text_alignment',
                          help='Alignment of the watermark in the document.')
         otm.add_argument('-p', '--print', action='store_true',
-                         default=False, dest='verbose',
-                         help='display informational messages')
+                         default=True, dest='verbose',
+                         help='Display informational messages')
 
         mto = sub_commands.add_parser('mto', help='Many-To-One: Apply many different '
                                                   'watermarks to a single file',
@@ -331,8 +330,8 @@ def parse_watermark_args():
                          choices=['horizontal', 'diagonal'], dest='text_alignment',
                          help='Alignment of the watermark in the document.')
         mto.add_argument('-p', '--print', action='store_true',
-                         default=False, dest='verbose',
-                         help='display informational messages')
+                         default=True, dest='verbose',
+                         help='Display informational messages')
 
         args = parser.parse_args()
         args.command = 'watermark'

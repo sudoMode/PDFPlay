@@ -8,9 +8,8 @@ from pdf_play.helpers import parse_watermark_args
 
 
 def _watermark_mto(texts=('PDFPlay',), target_file=None, output_directory=None,
-                   font_name='Helvetica-Bold',
-                   font_size='medium', font_color='lightred', text_alignment='diagonal', \
-                   verbose=False):
+                   font_name='Helvetica-Bold', font_size='medium',
+                   font_color='lightred', text_alignment='diagonal', verbose=False):
     total = len(texts)
     if verbose:
         print(f'--> Received {total} watermark texts...')
@@ -27,9 +26,8 @@ def _watermark_mto(texts=('PDFPlay',), target_file=None, output_directory=None,
 
 
 def _watermark_otm(text='PDFPlay', target_files=None, output_directory=None,
-                   font_name='Helvetica-Bold',
-                   font_size='medium', font_color='lightred', text_alignment='diagonal', \
-                   verbose=False):
+                   font_name='Helvetica-Bold', font_size='medium',
+                   font_color='lightred', text_alignment='diagonal', verbose=False):
     total = len(target_files)
     if verbose:
         print(f'--> Received {total} target files...')
@@ -48,9 +46,8 @@ def _watermark_otm(text='PDFPlay', target_files=None, output_directory=None,
 
 
 def _watermark_oto(text='PDFPlay', target_file=None, output_file=None,
-                   font_name='Helvetica-Bold',
-                   font_size='medium', font_color='lightred', text_alignment='diagonal', \
-                   verbose=False):
+                   font_name='Helvetica-Bold', font_size='medium',
+                   font_color='lightred', text_alignment='diagonal', verbose=False):
     watermark(text, target_file, output_file, font_name=font_name,
               font_size=font_size, font_color=font_color,
               text_alignment=text_alignment)
