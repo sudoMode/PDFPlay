@@ -42,6 +42,7 @@ def _watermark(args=None):
 
 
 def main():
+    print('main called...')
     args = parse_user_args()
     command_map = dict(watermark=_watermark)
     command_map[args.command](args)

@@ -6,6 +6,7 @@ from os.path import isfile
 from os.path import join
 from os.path import sep
 from pathlib import Path
+from pdf_play.helpers import utils
 
 
 def _flatten(nested_list):
@@ -46,7 +47,18 @@ class _OutputFileOTO(Action):
 class _TargetFileOTM(Action):
 
     def __call__(self, parser, namespace, values, option_string=None):
-        values = _flatten(values)
+        print(f'Values: {values}')
+        # values = _flatten(values)
+        values_ = []
+        for value in values:
+            if isdir(value):
+                pdfs = list(map(lambda x: join(value, x), filter(utils.is_pdf, listdir(
+                    value))))
+                values_.extend(pdfs)
+            else:
+                values_.append(value)
+        values = list(set(values_))
+        print(f'UV: {values}')
         setattr(namespace, self.dest, values)
 
 

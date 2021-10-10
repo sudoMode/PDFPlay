@@ -68,6 +68,7 @@ def _validate_args(parser, args):
 def parse_user_args(command=None):
     __usage = 'usage: pdf_play [-h] {watermark} ...'
     _usage = f'{_pdf_play}\n{__usage}'
+    print('parsing through main...')
     try:
         parser = ArgumentParser(prog='pdf_play',
                                 description='A Python utility to watermark PDF '

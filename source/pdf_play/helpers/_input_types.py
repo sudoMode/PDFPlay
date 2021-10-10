@@ -2,16 +2,10 @@
 
 from argparse import ArgumentTypeError
 from os.path import isdir
-from os.path import join
 from os.path import isfile
 from os.path import sep
-from os import listdir
-from os import getcwd
-from pathlib import Path
 
-
-def _is_pdf(path):
-    return path.endswith('.pdf')
+from pdf_play.helpers import utils
 
 
 class _TargetFileOTO:
@@ -19,7 +13,7 @@ class _TargetFileOTO:
     def __call__(self, path):
         if not isfile(path):
             raise ArgumentTypeError(f'File does not exits: {path}')
-        if not _is_pdf(path):
+        if not utils.is_pdf(path):
             msg = f'Given target file does not appear to be a PDF: {path}'
         return path
 
@@ -40,13 +34,12 @@ class _OutputFileOTO:
 class _TargetFileOTM:
 
     def __call__(self, path):
-        if _is_pdf(path):
-            pass
+        print(f'Path: {path}')
+        if utils.is_pdf(path):
+            if not isfile(path):
+                raise ArgumentTypeError(f'File does not exist: {path}')
         else:
-            if isdir(path):
-                pdfs = list(filter(_is_pdf, listdir(path)))
-                path = list(map(lambda x: join(path, x), pdfs))
-            else:
+            if not isdir(path):
                 raise ArgumentTypeError(f'Expected a PDF file or a directory that '
                                         f'contains PDF files, received: {path}')
         return path
