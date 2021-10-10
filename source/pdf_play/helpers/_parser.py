@@ -233,7 +233,8 @@ def parse_watermark_args():
                                   description='One-To-Many: Use this mode when you '
                                               'have got multiple target/S files.',
                                   epilog=""""--> Sample Usage: watermark otm -t 'this 
-                                              is my watermark text' -i 'sample1.pdf' 'sample2.pdf' 
+                                              is my watermark text' -i 'sample1.pdf' 
+                                              'sample2.pdf' 
                                               'MyPC/Downloads/PDFFiles'""")
         otm.add_argument('--text', '-t', type=str, default='PDFPlay', dest='text',
                          required=True, action=actions.watermark_text, nargs='+',
@@ -264,7 +265,8 @@ def parse_watermark_args():
                                               different watermark texts.""",
                                   epilog="""--> Sample usage: watermark mto -t 
                                               'watermark text#1' 'watermark text#2' 
-                                              'MyPC/SampleWatermarks/sample1.txt' -i 'sample.pdf'
+                                              'MyPC/SampleWatermarks/sample1.txt' -i
+                                               'sample.pdf'
                                               """)
         mto.add_argument('--text', '-t', default='PDFPlay',
                          type=types.watermark_mto,
