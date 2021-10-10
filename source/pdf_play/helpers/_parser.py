@@ -29,6 +29,7 @@ def _validate_otm(args):
             # print('User did not provide an output location, a directory called '
             #       '"watermarked" will be created to store all the watermarked PDF(s)')
             makedirs(args.output_directory)
+    print(f'Watermarked files will be saved to: {args.output_directory}')
 
 
 def _validate_mto(args):
@@ -41,6 +42,7 @@ def _validate_oto(args):
         file_name = args.target_file.split(sep)[-1]
         name, extension = file_name.split('.')
         args.output_file = join(base, f'{name}_watermarked.{extension}')
+    print(f'Watermarked files will be saved to: {args.output_file}')
 
 
 def _update_args(args):
