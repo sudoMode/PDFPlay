@@ -1,6 +1,6 @@
 # PDFPlay
 ```python
-some tag line
+Watermark PDF files!
 ```
 ---
 
@@ -43,132 +43,70 @@ some tag line
 
 [comment]: <> (Intro)
 
-***Decat*** is a Python package capable of de-concatenating strings that do not have
+***PDFPlay*** is a Python package that aims to provide easy-to-use utilities to manipulate
+PDF documents. Currently there's just one utility available, which is to "watermark" 
+PDF files.
 
-white-spaces in them, or in other words, it allows the user to infer spaces
+## Get Started
+> ### Install it
+>```python
+>>> pip install pdf-play
+>```
 
-programmatically. This is a simple utility that comes in handy with various modern
+> ### Play With It
+>```python
+>>> watermark oto -t watermark text -i sample.pdf
+>```
 
-Natural Language Processing(NLP) tasks such as cleaning, exploration or even manipulation
+> ### Use It In Your Projects
+> ```python
+> from pdf_play import watermark
+> 
+> # set some variables
+> wm_text = 'use this text as the watermark!'
+> target_file = 'MyPC/Downloads/PDFFiles/sample.pdf'
+> output_file = 'MyPC/Downloads/PDFFiles/sample_watermarked.pdf'
+> font_name = 'Helvetica'
+> font_size = 'medium'
+> text_alignment = 'horizontal'
+> 
+> # call the watermark function
+> watermark(wm_text, target_file, output_file, font_name=font_name, 
+> font_size=font_size, text_alignment=text_alignment)
+>```
 
-of text. [Zipf's Law](https://en.wikipedia.org/wiki/Zipf%27s_law) is
+## Features
+>> 🍥 Provides easy-to-use functions to code against and a neat CLI to work directly in 
+> your terminal.
+>
+>> 🀄️ Provides a bunch of configurable options with each command to set things just right.
+> 
+>> 🌈 Designed to be flexible, provides easy intergration for new commands & user-options.
 
-at the
+## Dependencies
+>> [PyPDF4 >= 1.27.0](https://pypi.org/project/PyPDF4/)
+> 
+>> [reportlab >= 3.6.1](https://pypi.org/project/reportlab/)
+> 
 
-core of this
+## Limitations
+>> ❗️ Requires [Python >= 3.6](https://python.org)
+> 
+>> ❗️ "watermark" is the only command available as of now.
+> 
 
-project, the aim is to provide an easy interface for programmers to extract meaningful
-
-information out of deformed pieces of texts.
-
-
-[comment]: <> (## Get Started)
-
-[comment]: <> (> ### Install It)
-
-[comment]: <> (>>```python)
-
-[comment]: <> (>> >> pip install decat)
-
-[comment]: <> (>>```)
-
-[comment]: <> (> ### Play With It)
-
-[comment]: <> (>>```python)
-
-[comment]: <> (>> >> decat -i someweirdtext)
-
-[comment]: <> (>> >> ['some', 'weird', 'text'])
-
-[comment]: <> (>>```)
-
-[comment]: <> (>> or)
-
-[comment]: <> (>>```python)
-
-[comment]: <> (>> >> python -m decat -i justanotherstring)
-
-[comment]: <> (>> >> ['just', 'another', 'string'])
-
-[comment]: <> (>>```)
-
-[comment]: <> (> ### Use It In Your Projects)
-
-[comment]: <> (>> #### _Sample Code_)
-
-[comment]: <> (>>> ```python)
-
-[comment]: <> (>>> from decat import decat)
-
-[comment]: <> (>>> )
-
-[comment]: <> (>>> )
-
-[comment]: <> (>>> weird_text = '“AnyfoolcanwritecodethatacomputercanunderstandGoodprogrammerswritecodethathumanscanunderstand.”–MartinFowler')
-
-[comment]: <> (>>> weird_text_simplified = decat&#40;weird_text&#41;)
-
-[comment]: <> (>>> print&#40;weird_text_simplified&#41;)
-
-[comment]: <> (>>>```)
-
-[comment]: <> (>> #### _Console_)
-
-[comment]: <> (>>> ['any', 'fool', 'can', 'write', 'code', 'that', 'a', 'computer', 'can',)
-
-[comment]: <> ('understand', 'good', 'programmers', 'write', 'code', 'that', 'humans', 'can',)
-
-[comment]: <> ('understand', 'martin', 'fowler'])
-
-[comment]: <> (## Features)
-
-[comment]: <> (>> 🪶 A light weight package, built around the features available in standard library)
-
-[comment]: <> (>)
-
-[comment]: <> (>> 📚 An ever-expanding vocabulary, knows more than 300K English words)
-
-[comment]: <> (>)
-
-[comment]: <> (>> 🪃 Simplistic design, allows for easy expansion to new languages and custom vocabulary sets)
-
-[comment]: <> (## Dependencies)
-
-[comment]: <> (> ⭕️ ___None___ 🎉)
-
-[comment]: <> (## Limitations)
-
-[comment]: <> (> ❗ Requires Python >= 3.6)
-
-[comment]: <> (>)
-
-[comment]: <> (> ❗ ️All input will be treated as lower-case)
-
-[comment]: <> (>>```python)
-
-[comment]: <> (>> >> ATitleCaseString --> ['a', 'title', 'case', 'string'])
-
-[comment]: <> (>>```)
-
-[comment]: <> (> ❗️ Punctuation marks, numbers and special characters will be stripped from the input and)
-
-[comment]: <> (> will not be preserved in the output)
-
-[comment]: <> (>>```python)
-
-[comment]: <> (>> >>  dummy.email1234@gmail.com --> ['dummy', 'email', 'gmail', 'com'])
-
-[comment]: <> (>>```)
-
-[comment]: <> (>)
-
-[comment]: <> (## Credits)
-
-[comment]: <> (>> [Generic Human]&#40;https://stackoverflow.com/users/1515832/generic-human&#41;)
-
-[comment]: <> (>)
-
-[comment]: <> (>> [Rachael Tatman]&#40;https://www.kaggle.com/rtatman&#41;)
+## Get Help
+>> ```python
+   >> pdf-play -h
+>>```
+>
+>> ```python
+   >> watermark -h
+>>```
+>
+>> ```python
+   >> watermark oto -h
+>>```
 
 ## License
 > ### MIT
