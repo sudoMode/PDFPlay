@@ -11,10 +11,14 @@ from pdf_play.helpers import utils
 class _TargetFileOTO:
 
     def __call__(self, path):
+        if isdir(path):
+            raise ArgumentTypeError(f'Target file has to be a PDF file, receieved a '
+                                    f'directory: {path}')
         if not isfile(path):
             raise ArgumentTypeError(f'File does not exits: {path}')
         if not utils.is_pdf(path):
-            msg = f'Given target file does not appear to be a PDF: {path}'
+            raise ArgumentTypeError(f'Given target file does not appear to be a PDF:'
+                                    f' {path}')
         return path
 
 
@@ -61,12 +65,11 @@ class _WatermarkMTO:
 
     def __call__(self, path):
         supported = ['.txt']
-        if not isfile(path):
-            raise ArgumentTypeError(f'Provide path to a valid file to read watermark '
-                                    f'texts, given file does not exist: {path}')
-        if not any(map(lambda x: x == path[-len(x):], supported)):
-            raise ArgumentTypeError(f'Bad input for watermark file: {path}, '
-                                    f'please check supported file types: {supported}')
+        if isfile(path):
+            # check that paths ends with one of the supported file types
+            if not any(map(lambda x: x == path[-len(x):], supported)):
+                raise ArgumentTypeError(f'Bad input for watermark file: {path}, '
+                                        f'please check supported file types: {supported}')
         return path
 
 
@@ -75,3 +78,4 @@ output_file_oto = _OutputFileOTO()
 target_file_otm = _TargetFileOTM()
 output_file_otm = _OutputFileOTM()
 watermark_mto = _WatermarkMTO()
+target_file_mto = _TargetFileOTO()

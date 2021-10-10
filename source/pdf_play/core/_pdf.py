@@ -27,7 +27,7 @@ class PDF:
         assert isinstance(path, str), f'File path must be a string, received: {path}'
         if path and path != self._in_path:
             self._in_path = path
-            self._target = PdfFileReader(self._in_path)
+        self._target = PdfFileReader(self._in_path)
 
     def _set_out_path(self, path=None):
         if path is None:
