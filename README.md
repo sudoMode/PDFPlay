@@ -4,80 +4,62 @@ some tag line
 ```
 ---
 
-![made-with-python](images/made-with-python.svg)
-![built-with-<3](images/built-with-love.svg)
-![open-source](images/open-source.svg)
-![powered-by-coffee](images/powered-by-coffee.svg)
-
+[comment]: <> (badges 1)
 <p align="center">
     <a href="#">
-        <img src="https://forthebadge.com/images/badges/made-with-python.svg"/>
+        <img src="https://raw.githubusercontent.com/sudoMode/PDFPlay/master/images/made-with-python.svg"/>
     </a>
     <a href="#">
-        <img src="https://forthebadge.com/images/badges/powered-by-coffee.svg"/>
+        <img src="https://raw.githubusercontent.com/sudoMode/PDFPlay/master/images/powered-by-coffee.svg"/>
     </a>
     <a href="#">
-        <img src="https://forthebadge.com/images/badges/open-source.svg"/>
+        <img src="https://raw.githubusercontent.com/sudoMode/PDFPlay/master/images/open-source.svg"/>
     </a>
     <a href="#">
-        <img src="https://forthebadge.com/images/badges/built-with-love.svg"/>
+        <img src="https://raw.githubusercontent.com/sudoMode/PDFPlay/master/images/built-with-love.svg"/>
     </a>
 </p>
 
 ---
 
 [comment]: <> (badges 2)
-
-[comment]: <> (<p align="center">)
-
-[comment]: <> (    <a href="https://www.codefactor.io/repository/github/sudomode/decat">)
-
-[comment]: <> (        <img src="https://img.shields.io/codefactor/grade/github/sudomode/decat/master?style=for-the-badge"/>)
-
-[comment]: <> (    </a>)
-
-[comment]: <> (    <a href="#">)
-
-[comment]: <> (        <img src="https://img.shields.io/github/v/release/sudomode/decat?style=for-the-badge"/>)
-
-[comment]: <> (    </a>)
-
-[comment]: <> (    <a href="#">)
-
-[comment]: <> (        <img src="https://img.shields.io/github/languages/code-size/sudomode/decat?style=for-the-badge"/>)
-
-[comment]: <> (    </a>)
-
-[comment]: <> (    <a href="#">)
-
-[comment]: <> (        <img src="https://img.shields.io/github/license/sudomode/decat?color=rgb%28100%2C%20150%2C%20150%29&style=for-the-badge"/>)
-
-[comment]: <> (    </a>)
-
-[comment]: <> (</p>)
+<p align="center">
+    <a href="https://www.codefactor.io/repository/github/sudomode/pdfplay">
+        <img src="https://img.shields.io/codefactor/grade/github/sudomode/PDFPlay/master?style=for-the-badge"/>
+    </a>
+    <a href="https://github.com/sudoMode/PDFPlay/releases">
+        <img src="https://img.shields.io/github/v/release/sudomode/pdfplay?style=for-the-badge"/>
+    </a>
+    <a href="#">
+        <img src="https://img.shields.io/github/languages/code-size/sudomode/pdfplay?color=black&style=for-the-badge"/>
+    </a>
+    <a href="https://raw.githubusercontent.com/sudoMode/PDFPlay/master/LICENSE">
+        <img src="https://img.shields.io/github/license/sudomode/pdfplay?color=pink&style=for-the-badge"/>
+    </a>
+</p>
 
 ---
 
 
-[comment]: <> (Into)
+[comment]: <> (Intro)
 
-[comment]: <> (***Decat*** is a Python package capable of de-concatenating strings that do not have)
+***Decat*** is a Python package capable of de-concatenating strings that do not have
 
-[comment]: <> (white-spaces in them, or in other words, it allows the user to infer spaces)
+white-spaces in them, or in other words, it allows the user to infer spaces
 
-[comment]: <> (programmatically. This is a simple utility that comes in handy with various modern)
+programmatically. This is a simple utility that comes in handy with various modern
 
-[comment]: <> (Natural Language Processing&#40;NLP&#41; tasks such as cleaning, exploration or even manipulation)
+Natural Language Processing(NLP) tasks such as cleaning, exploration or even manipulation
 
-[comment]: <> (of text. [Zipf's Law]&#40;https://en.wikipedia.org/wiki/Zipf%27s_law&#41; is)
+of text. [Zipf's Law](https://en.wikipedia.org/wiki/Zipf%27s_law) is
 
-[comment]: <> (at the)
+at the
 
-[comment]: <> (core of this)
+core of this
 
-[comment]: <> (project, the aim is to provide an easy interface for programmers to extract meaningful)
+project, the aim is to provide an easy interface for programmers to extract meaningful
 
-[comment]: <> (information out of deformed pieces of texts.)
+information out of deformed pieces of texts.
 
 
 [comment]: <> (## Get Started)
