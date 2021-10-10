@@ -1,7 +1,7 @@
 # dirs
 .idea/
 venv/
-dist/
+*dist/
 *.egg-info
 */__pycache__/
 
