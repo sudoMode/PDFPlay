@@ -6,6 +6,7 @@ from math import sqrt
 from PyPDF4.pdf import PdfFileReader
 from reportlab.lib.colors import Color
 from reportlab.pdfgen.canvas import Canvas
+from pdf_play.core import __settings__ as settings
 
 
 # noinspection PyTypeChecker
@@ -13,14 +14,13 @@ class Watermark:
 
     def __init__(self, text, page_size='A4', font_name='Helvetica-Bold',
                  font_size='medium',
-                 text_alignment='diagonal', color='black', position_x='center',
+                 text_alignment='diagonal', font_color='black', position_x='center',
                  position_y='center'):
-        # TODO: think...
         self._page_size = page_size
         self._font_name = font_name
         self._font_size = font_size
         self._text_alignment = text_alignment
-        self._color = color
+        self._color = font_color
         self._text = text
         self._position_x = position_x
         self._position_y = position_y
@@ -77,7 +77,11 @@ class Watermark:
         self._calculate_font_size()
 
     def _set_color(self):
-        self._color = Color()
+        color = settings.COLORS[self._color]
+        self._red = color['red'] / 255
+        self._green = color['green'] / 255
+        self._blue = color['blue'] / 255
+        self._alpha = color['alpha']
 
     def _set_position(self):
         # set to origin
@@ -88,7 +92,7 @@ class Watermark:
         # update canvas attrs
         self._canvas.setPageSize(self._page_size)
         self._canvas.setFont(self._font_name, self._font_size)
-        self._canvas.setFillColor(self._color)
+        self._canvas.setFillColor((self._red, self._green, self._blue), alpha=self._alpha)
         x, y = list(map(int, self._page_size))
         # set origin to center of the page
         self._canvas.translate(x // 2, y // 2)

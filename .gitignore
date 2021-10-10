@@ -9,3 +9,5 @@ venv/
 *.pdf
 *.pyc
 *.DS_Store
+wms.txt
+notes
