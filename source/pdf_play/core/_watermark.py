@@ -2,10 +2,10 @@ from io import BytesIO
 from math import atan
 from math import degrees
 from math import sqrt
-from PyPDF4.pdf import PdfFileReader
-from reportlab.pdfgen.canvas import Canvas
 
+from PyPDF4.pdf import PdfFileReader
 from reportlab.lib.colors import Color
+from reportlab.pdfgen.canvas import Canvas
 
 
 # noinspection PyTypeChecker
@@ -46,7 +46,7 @@ class Watermark:
         x, y = list(map(int, self._page_size))
         length = round(x * .8)
         if self._text_alignment == 'diagonal':
-            length = round(sqrt(x**2 + y**2) * .8)
+            length = round(sqrt(x ** 2 + y ** 2) * .8)
         if self._text_alignment == 'vertical':
             length = round(y * .8)
         self._max_length = length
@@ -54,13 +54,13 @@ class Watermark:
     def _calculate_font_size(self):
         x, y = list(map(int, self._page_size))
         max_width = round(self._max_length * .5)
-        max_font = x*.1
+        max_font = x * .1
         if self._font_size == 'medium':
             max_width = round(self._max_length * .75)
-            max_font = x*.2
+            max_font = x * .2
         if self._font_size == 'large':
             max_width = round(self._max_length)
-            max_font = x*.3
+            max_font = x * .3
         size = 5
 
         while True:
