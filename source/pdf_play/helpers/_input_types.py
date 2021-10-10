@@ -34,7 +34,6 @@ class _OutputFileOTO:
 class _TargetFileOTM:
 
     def __call__(self, path):
-        print(f'Path: {path}')
         if utils.is_pdf(path):
             if not isfile(path):
                 raise ArgumentTypeError(f'File does not exist: {path}')

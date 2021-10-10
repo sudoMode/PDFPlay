@@ -1,23 +1,12 @@
 from argparse import Action
-from os import makedirs
 from os import listdir
+from os import makedirs
 from os.path import isdir
-from os.path import isfile
 from os.path import join
 from os.path import sep
 from pathlib import Path
+
 from pdf_play.helpers import utils
-
-
-def _flatten(nested_list):
-    values = []
-    for i in nested_list:
-        if isinstance(i, list):
-            for j in i:
-                values.append(j)
-        else:
-            values.append(i)
-    return values
 
 
 class _WatermarkText(Action):
@@ -47,8 +36,6 @@ class _OutputFileOTO(Action):
 class _TargetFileOTM(Action):
 
     def __call__(self, parser, namespace, values, option_string=None):
-        print(f'Values: {values}')
-        # values = _flatten(values)
         values_ = []
         for value in values:
             if isdir(value):
@@ -58,7 +45,6 @@ class _TargetFileOTM(Action):
             else:
                 values_.append(value)
         values = list(set(values_))
-        print(f'UV: {values}')
         setattr(namespace, self.dest, values)
 
 
