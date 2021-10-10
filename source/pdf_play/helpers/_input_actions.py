@@ -2,9 +2,9 @@ from argparse import Action
 from os import listdir
 from os import makedirs
 from os.path import isdir
+from os.path import isfile
 from os.path import join
 from os.path import sep
-from os.path import isfile
 from pathlib import Path
 
 from pdf_play.helpers import utils

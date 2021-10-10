@@ -1,4 +1,3 @@
-from reportlab.lib import pagesizes as ps
 from reportlab.lib.colors import Color
 
 _COLORS = {

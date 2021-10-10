@@ -256,13 +256,14 @@ def parse_watermark_args():
                          help='Alignment of the watermark in the document.')
 
         mto = commands.add_parser('mto', help='Many-To-One: Apply many different '
-                                                  'watermarks to a single file',
-                                      description='''Many-To-One: Use this mode when you
+                                              'watermarks to a single file',
+                                  description='''Many-To-One: Use this mode when you
                                               want to watermark a file multiple times with
                                               different watermark texts.''',
-                                      epilog='''--> Sample usage: watermark mto -t 
+                                  epilog='''--> Sample usage: watermark mto -t 
                                               'watermark text#1' 'watermark text#2' 
-                                              'MyPC/SampleWatermarks/sample1.txt' -i sample.pdf''')
+                                              'MyPC/SampleWatermarks/sample1.txt' -i 
+                                              sample.pdf''')
         mto.add_argument('--text', '-t', default='PDFPlay',
                          type=types.watermark_mto,
                          action=actions.watermark_mto,
