@@ -193,17 +193,18 @@ def parse_watermark_args():
         parser = ArgumentParser(prog='watermark',
                                 description='A Python utility to watermark PDF '
                                             'documents.',
-                                epilog='''--> Run -h/--help to get more details. 
-                                Example: "watermark -h"''')
+                                epilog='''--> Run -h/--help against positional 
+                                        arguments to get more details. Example: watermark 
+                                        oto -h''')
         commands = parser.add_subparsers(dest='type',
                                          help='''Modes of operation for 
                                                  watermarking PDF files.''')
         oto = commands.add_parser('oto',
-                                      help='''One-To-One: Apply watermark text to a 
+                                  help='''One-To-One: Apply watermark text to a 
                                                    single file.''',
-                                      description='''One-To-One: Use this mode when you 
+                                  description='''One-To-One: Use this mode when you 
                                               have got a single target file.''',
-                                      epilog='''--> Sample Usage: watermark oto -t this 
+                                  epilog='''--> Sample Usage: watermark oto -t this 
                                               is my watermark text -i sample.pdf''')
         oto.add_argument('--text', '-t', type=str, default='PDFPlay',
                          dest='text', required=True, nargs='+',
@@ -229,10 +230,10 @@ def parse_watermark_args():
                          help='Alignment of the watermark in the document.')
 
         otm = commands.add_parser('otm', help='One-To-Many: Apply watermark to '
-                                                  'multiple files.',
-                                      description='One-To-Many: Use this mode when you '
-                                                  'have got multiple target files.',
-                                      epilog='''--> Sample Usage: watermark otm -t this 
+                                              'multiple files.',
+                                  description='One-To-Many: Use this mode when you '
+                                              'have got multiple target files.',
+                                  epilog='''--> Sample Usage: watermark otm -t this 
                                               is my watermark text -i sample1.pdf sample2.pdf 
                                               MyPC/Downloads/PDFFiles ''')
         otm.add_argument('--text', '-t', type=str, default='PDFPlay', dest='text',
