@@ -35,6 +35,11 @@ class PDF:
                 split = self._in_path.split('.')
                 name, extension = '.'.join(split[:-1]), split[-1]
                 path = f'{name}_watermarked.{extension}'
+        else:
+            if not isinstance(path, str):
+                raise TypeError(f'Output path must be a string, received: {path}')
+            if not path.endswith('.pdf'):
+                raise TypeError(f'Output file must be a PDF, received: {path}')
         self._out_path = path
         self._out = PdfFileWriter()
 
@@ -43,12 +48,6 @@ class PDF:
 
     def _set_watermark(self, **style):
         style['page_size'] = self._target.getPage(0).mediaBox[-2:]
-        print(f'Style: {style}')
-        # x = 600
-        # y = x * 1.4
-        # style['page_size'] = [x, y]
-        x, y = style['page_size']
-        print(f'R: {round(y / x, 3)}')
         watermark = Watermark(self._watermark_text, **style)
         self._watermark = watermark.unload()
         self._watermark_is_loaded = True
@@ -56,9 +55,7 @@ class PDF:
     def _load_watermark(self, text, target_file, out_file, **style):
         try:
             self._set_watermark_text(text)
-            # TODO: check path
             self._set_in_path(target_file)
-            # TODO: implement
             self._set_out_path(out_file)
             self._set_watermark(**style)
         except Exception as e:
@@ -80,9 +77,9 @@ class PDF:
 
 
 def _test():
-    from pdf_play import __settings__ as _settings
     pdf = PDF()
-    pdf.apply_watermark('test watermark!', _settings.INPUT_FILE)
+    path = ''
+    pdf.apply_watermark('test watermark!', path)
 
 
 if __name__ == '__main__':

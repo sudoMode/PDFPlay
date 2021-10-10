@@ -6,6 +6,7 @@ from os.path import join
 from os.path import isfile
 from os.path import sep
 from os import listdir
+from os import getcwd
 from pathlib import Path
 
 
@@ -16,8 +17,10 @@ def _is_pdf(path):
 class _TargetFileOTO:
 
     def __call__(self, path):
+        if not isfile(path):
+            raise ArgumentTypeError(f'File does not exits: {path}')
         if not _is_pdf(path):
-            raise ArgumentTypeError(f'Expected a PDF file, received: {path}')
+            msg = f'Given target file does not appear to be a PDF: {path}'
         return path
 
 

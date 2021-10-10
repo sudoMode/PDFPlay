@@ -8,3 +8,4 @@ dist/
 # files
 *.pdf
 *.pyc
+*.DS_Store
