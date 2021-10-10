@@ -52,7 +52,6 @@ class Watermark:
         self._max_length = length
 
     def _calculate_font_size(self):
-        print('called')
         x, y = list(map(int, self._page_size))
         max_width = round(self._max_length * .5)
         max_font = x*.1
@@ -73,8 +72,6 @@ class Watermark:
             size += 5
         self._font_size = size
         self._width = width
-        print(f'Font Size: {size} | Width: {width} | Max: {max_width} | M:'
-              f' {self._max_length}')
 
     def _set_font_size(self):
         self._calculate_font_size()

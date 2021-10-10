@@ -116,6 +116,70 @@ def parse_user_args(command=None):
                          choices=['horizontal', 'diagonal'], dest='text_alignment',
                          help='Alignment of the watermark in the document.')
 
+        # otm = sub_commands.add_parser('otm', help='One-To-Many: Apply watermark to '
+        #                                           'multiple files.',
+        #                               description='One-To-Many: Use this mode when you '
+        #                                           'have got multiple target files.',
+        #                               epilog='''--> Sample Usage: python -m pdf_play
+        #                                      watermark otm -t this is my watermark
+        #                                      text -i sample1.pdf sample2.pdf
+        #                                      MyPC/Downloads/PDFFiles ''')
+        # otm.add_argument('--text', '-t', type=str, default='PDFPlay', dest='text',
+        #                  required=True, action=actions.watermark_text, nargs='+',
+        #                  help='(**) Text that is to be applied as the watermark.')
+        # otm.add_argument('--input', '-i', default=None, type=types.target_file_otm,
+        #                  action=actions.target_file_otm, dest='target_files', nargs='+',
+        #                  required=True,
+        #                  help='''(**) Paths to files/directories that contain
+        #                  your target files.''')
+        # otm.add_argument('--output', '-o', default=None,
+        #                  type=types.output_file_otm,
+        #                  action=actions.output_file_otm, dest='output_directory',
+        #                  help='Directory to save watermarked files.')
+        # otm.add_argument('--font-name', '-fn', default='Helvetica-Bold', type=str,
+        #                  choices=['Helvetica-Bold'], dest='font_name',
+        #                  help='Name of the font that you want to use in the watermark.')
+        # otm.add_argument('--font-size', '-fs', default='medium', type=str,
+        #                  choices=['small', 'medium', 'large'], dest='font_size',
+        #                  help='Size of the font.')
+        # otm.add_argument('--text-alignment', '-ta', default='diagonal', type=str,
+        #                  choices=['horizontal', 'diagonal'], dest='text_alignment',
+        #                  help='Alignment of the watermark in the document.')
+        #
+        # mto = sub_commands.add_parser('mto', help='Many-To-One: Apply many different '
+        #                                           'watermarks to a single file',
+        #                               description='''Many-To-One: Use this mode when you
+        #                               want to watermark a file multiple times with
+        #                               different watermark texts.''',
+        #                               epilog='''--> Sample usage: python -m pdf_play
+        #                               watermark mto -t watermark text#1, watermark
+        #                               text#2, MyPC/SampleWatermarks/sample1.txt -i
+        #                               sample.pdf''')
+        # mto.add_argument('--text', '-t', default='PDFPlay',
+        #                  type=types.watermark_mto,
+        #                  action=actions.watermark_mto,
+        #                  dest='texts',
+        #                  help='''(**) Texts that are to be watermarked or path to a txt
+        #                       file that contains such texts.
+        #                       (Expected comma separated values)''')
+        # mto.add_argument('--input', '-i', default=None, type=types.target_file_oto,
+        #                  action=actions.target_file_oto, dest='target_file',
+        #                  required=True,
+        #                  help='(**) Path to the PDF file that is to be watermarked.')
+        # mto.add_argument('--output', '-o', default=None,
+        #                  type=types.output_file_otm,
+        #                  action=actions.output_file_otm, dest='output_directory',
+        #                  help='''Directory to save watermarked files.''')
+        # mto.add_argument('--font-name', '-fn', default='Helvetica-Bold', type=str,
+        #                  choices=['Helvetica-Bold'], dest='font_name',
+        #                  help='Name of the font that you want to use in the watermark.')
+        # mto.add_argument('--font-size', '-fs', default='medium', type=str,
+        #                  choices=['small', 'medium', 'large'], dest='font_size',
+        #                  help='Size of the font.')
+        # mto.add_argument('--text-alignment', '-ta', default='diagonal', type=str,
+        #                  choices=['horizontal', 'diagonal'], dest='text_alignment',
+        #                  help='Alignment of the watermark in the document.')
+
         args = parser.parse_args() if command is None else parser.parse_args(command)
         _validate_args(parser, args)
         args = _update_args(args)
