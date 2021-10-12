@@ -15,7 +15,7 @@ class Watermark:
     def __init__(self, text, page_size='A4', font_name='Helvetica-Bold',
                  font_size='medium',
                  text_alignment='diagonal', font_color='black', position_x='center',
-                 position_y='center'):
+                 position_y='center', verbose=False, debug=False):
         self._page_size = page_size
         self._font_name = font_name
         self._font_size = font_size
@@ -24,6 +24,8 @@ class Watermark:
         self._text = text
         self._position_x = position_x
         self._position_y = position_y
+        self.verbose = verbose
+        self.debug = debug
         self._x, self._y = 0, 0
         self._init_canvas()
         self._update_style()

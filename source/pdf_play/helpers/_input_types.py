@@ -64,7 +64,7 @@ class _OutputFileOTM:
 class _WatermarkMTO:
 
     def __call__(self, path):
-        supported = ['.txt']
+        supported = ['.txt', '.csv', '.xlsx', '.xls']
         if isfile(path):
             # check that paths ends with one of the supported file types
             if not any(map(lambda x: x == path[-len(x):], supported)):

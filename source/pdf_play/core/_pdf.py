@@ -52,19 +52,19 @@ class PDF:
         self._watermark = watermark.unload()
         self._watermark_is_loaded = True
 
-    def _load_watermark(self, text, target_file, out_file, **style):
+    def _load_watermark(self, wm_text, file_to_watermark, file_to_save_it_as, **style):
         try:
-            self._set_watermark_text(text)
-            self._set_in_path(target_file)
-            self._set_out_path(out_file)
+            self._set_watermark_text(wm_text)
+            self._set_in_path(file_to_watermark)
+            self._set_out_path(file_to_save_it_as)
             self._set_watermark(**style)
         except Exception as e:
             print(f'Error: {e}')
             if self._debug:
                 raise e
 
-    def apply_watermark(self, text, target_file, out_file=None, **style):
-        self._load_watermark(text, target_file, out_file, **style)
+    def apply_watermark(self, wm_text, file_to_watermark, file_to_save_it_as, **style):
+        self._load_watermark(wm_text, file_to_watermark, file_to_save_it_as, **style)
         if self._watermark_is_loaded:
             for i in range(self._target.getNumPages()):
                 page = self._target.getPage(i)
