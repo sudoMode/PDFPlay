@@ -7,6 +7,7 @@ from pdf_play.core._watermark import Watermark
 class PDF:
 
     def __init__(self, debug=False):
+        # TODO: think
         self._in_path = None
         self._target = None
         self._out_path = None
@@ -47,39 +48,52 @@ class PDF:
         self._watermark_text = text
 
     def _set_watermark(self, **style):
-        style['page_size'] = self._target.getPage(0).mediaBox[-2:]
-        watermark = Watermark(self._watermark_text, **style)
+        page_size = list(map(int, self._target.getPage(0).mediaBox[-2:]))
+        font_name = style.get('font_name', 'Helvetica-Bold')
+        font_size = style.get('font_size', 'large')
+        font_color = style.get('font_color', 'lightred')
+        text_alignment = style.get('text_alignment', 'diagonal')
+        watermark = Watermark(self._watermark_text, page_size=page_size,
+                              font_name=font_name, font_size=font_size,
+                              font_color=font_color, text_alignment=text_alignment)
         self._watermark = watermark.unload()
         self._watermark_is_loaded = True
 
-    def _load_watermark(self, text, target_file, out_file, **style):
+    def _load_watermark(self, wm_text, file_to_watermark, file_to_save_it_as, **style):
         try:
-            self._set_watermark_text(text)
-            self._set_in_path(target_file)
-            self._set_out_path(out_file)
+            self._set_watermark_text(wm_text)
+            self._set_in_path(file_to_watermark)
+            self._set_out_path(file_to_save_it_as)
             self._set_watermark(**style)
         except Exception as e:
             print(f'Error: {e}')
             if self._debug:
                 raise e
 
-    def apply_watermark(self, text, target_file, out_file=None, **style):
-        self._load_watermark(text, target_file, out_file, **style)
+    def apply_watermark(self, wm_text, file_to_watermark, file_to_save_it_as, **style):
+        self._load_watermark(wm_text, file_to_watermark, file_to_save_it_as, **style)
+        print(f'working...: {locals()}')
         if self._watermark_is_loaded:
             for i in range(self._target.getNumPages()):
                 page = self._target.getPage(i)
                 page.mergePage(self._watermark)
                 self._out.addPage(page)
-
             with open(self._out_path, 'wb') as f:
                 self._out.write(f)
             self._target.stream.close()
 
 
 def _test():
-    pdf = PDF()
-    path = ''
-    pdf.apply_watermark('test watermark!', path)
+    pdf = PDF(debug=True)
+    text = 'watermark text 1' \
+           '\nwatermark text 2' \
+           '\nwatermark text 3' \
+           '\nwatermark text 4' \
+           '\nwatermark text 5'
+    path = '/Users/mandeepsingh/dev/projects/py/PDFPlay/tests/.data/sample6.pdf'
+    out = '/Users/mandeepsingh/dev/projects/py/PDFPlay/tests/.data/sample6 wm.pdf'
+
+    pdf.apply_watermark(text, path, out)
 
 
 if __name__ == '__main__':

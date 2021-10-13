@@ -6,6 +6,7 @@ from os.path import isfile
 from os.path import join
 from os.path import sep
 from pathlib import Path
+import pandas as pd
 
 from pdf_play.helpers import utils
 
@@ -69,10 +70,13 @@ class _WatermarkMTO(Action):
         values_ = []
         for value in values:
             if isfile(value):
-                with open(value, 'r') as f:
-                    values_.extend(f.read().splitlines())
-            else:
-                values_.append(value)
+                if value.endswith('.csv'):
+                    data = pd.read_csv(value)
+                else:
+                    data = pd.read_excel(value)
+                values_.extend(data.iloc[:, :2].values.tolist())
+                continue
+            values_.append(value)
         setattr(namespace, self.dest, values_)
 
 
