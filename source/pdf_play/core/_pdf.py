@@ -85,7 +85,11 @@ class PDF:
 
 def _test():
     pdf = PDF(debug=True)
-    text = 'mark#1\nmark#2\nmark#3'
+    text = 'watermark text 1' \
+           '\nwatermark text 2' \
+           '\nwatermark text 3' \
+           '\nwatermark text 4' \
+           '\nwatermark text 5'
     path = '/Users/mandeepsingh/dev/projects/py/PDFPlay/tests/.data/sample6.pdf'
     out = '/Users/mandeepsingh/dev/projects/py/PDFPlay/tests/.data/sample6_wm.pdf'
 

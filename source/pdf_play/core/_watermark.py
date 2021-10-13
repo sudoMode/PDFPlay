@@ -125,42 +125,34 @@ class Watermark:
             text = self._text
         if font is None:
             font = self._font_name
-        print('-------Cal--------')
         factors = dict(small=.3, medium=.5, large=.7)
         max_width = int(self._max_length * factors[self.font_size])
-        size = 10
-        print(f'MW: {max_width}')
+        size = 2
         while True:
             width = self._canvas.stringWidth(text, font, size)
-            print(f'W: {width} | F: {size} | P: {size * len(text)}')
-            if width > max_width:
+            if width > max_width or size > max_width*.2:
                 break
-            size += 10
+            size += 2
+        print(f'MQ: {max_width} | FS: {size}')
         return size
 
     def _draw_watermark(self):
         """
 
         """
-        print(f'PS: {self._page_size}')
-        print(f'X-Axis: {self._x} | Y-Axis: {self._y} | D-Axis: {self._d}')
-        print(f'ML: {self._max_length}')
-        print(f'FS: {self._font_size}')
-        x, y = self._page_size
-        texts = ['singh.mandeep2207@gmail.com',
-                 'vivek.vijayvargia@k2qcapital.com',
-                 'gaurav.chaudhary@amakaan.comandsomedirtytext']
+        texts = self._text.splitlines()
         self._canvas.setPageSize(self._page_size)
         self._canvas.setFont(self._font_name, self._font_size)
         self._canvas.setFillColor((self._red, self._green, self._blue), alpha=self._alpha)
-        self._canvas.translate(x // 2, y // 2)
+        # set origin to center of the page
+        self._canvas.translate(self._page_size[0] // 2, self._page_size[1] // 2)
         self._canvas.rotate(self._rotation)
-        x, y = (0, 0)
-        for text in texts:
-            font_size = self._calculate_font_size(text)
+        font_size = self._calculate_font_size(max(texts, key=len))
+        x, y = (0, (len(texts)//2) * (font_size*.75))
+        for i, text in enumerate(texts):
             self._canvas.setFontSize(font_size)
             self._canvas.drawCentredString(x, y, text)
-            y -= font_size * 1.25
+            y -= (font_size * .8) + 10
         self._canvas.save()
 
     def unload(self):
