@@ -16,6 +16,8 @@ class Watermark:
                  font_size='medium',
                  text_alignment='diagonal', font_color='black', position_x='center',
                  position_y='center', verbose=False, debug=False):
+        # TODO: assert value check
+        # TODO: cleanup
         self._page_size = page_size
         self._font_name = font_name
         self._font_size = font_size
@@ -45,15 +47,22 @@ class Watermark:
         self._rotation = rotation
 
     def _set_max_length(self):
+        """
+            80% of axis length
+            depends on text alignment:
+                - horizontal: x-axis length
+                - vertical: y-axis length
+                - diagonal: diagonal length
+        """
         x, y = list(map(int, self._page_size))
-        length = round(x * .8)
+        length = round(x)
         if self._text_alignment == 'diagonal':
-            length = round(sqrt(x ** 2 + y ** 2) * .8)
+            length = round(sqrt(x ** 2 + y ** 2))
         if self._text_alignment == 'vertical':
-            length = round(y * .8)
-        self._max_length = length
+            length = round(y)
+        self._max_length = length * .8
 
-    def _calculate_font_size(self):
+    def _set_font_size(self):
         x, y = list(map(int, self._page_size))
         max_width = round(self._max_length * .5)
         max_font = x * .1
@@ -75,9 +84,6 @@ class Watermark:
         self._font_size = size
         self._width = width
 
-    def _set_font_size(self):
-        self._calculate_font_size()
-
     def _set_color(self):
         color = settings.COLORS[self._color]
         self._red = color['red'] / 255
@@ -95,6 +101,7 @@ class Watermark:
         self._canvas.setPageSize(self._page_size)
         self._canvas.setFont(self._font_name, self._font_size)
         self._canvas.setFillColor((self._red, self._green, self._blue), alpha=self._alpha)
+        # TODO: object attrs
         x, y = list(map(int, self._page_size))
         # set origin to center of the page
         self._canvas.translate(x // 2, y // 2)
@@ -108,7 +115,7 @@ class Watermark:
         self._set_rotation()
         self._set_font_size()
         self._set_color()
-        self._set_position()
+        # self._set_position()
 
     def unload(self):
         watermarked_pdf = PdfFileReader(self._buffer)

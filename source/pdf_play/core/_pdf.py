@@ -7,6 +7,7 @@ from pdf_play.core._watermark import Watermark
 class PDF:
 
     def __init__(self, debug=False):
+        # TODO: think
         self._in_path = None
         self._target = None
         self._out_path = None
@@ -47,8 +48,14 @@ class PDF:
         self._watermark_text = text
 
     def _set_watermark(self, **style):
-        style['page_size'] = self._target.getPage(0).mediaBox[-2:]
-        watermark = Watermark(self._watermark_text, **style)
+        page_size = self._target.getPage(0).mediaBox[-2:]
+        font_name = style.get('font_name', 'Helvetica-Bold')
+        font_size = style.get('font_size', 'medium')
+        font_color = style.get('font_color', 'lightred')
+        text_alignment = style.get('text_alignment', 'diagonal')
+        watermark = Watermark(self._watermark_text, page_size=page_size,
+                              font_name=font_name, font_size=font_size,
+                              font_color=font_color, text_alignment=text_alignment)
         self._watermark = watermark.unload()
         self._watermark_is_loaded = True
 
@@ -77,9 +84,12 @@ class PDF:
 
 
 def _test():
-    pdf = PDF()
-    path = ''
-    pdf.apply_watermark('test watermark!', path)
+    pdf = PDF(debug=True)
+    text = 'mark#1\nmark#2\nmark#3'
+    path = '/Users/mandeepsingh/dev/projects/py/PDFPlay/tests/.data/sample6.pdf'
+    out = '/Users/mandeepsingh/dev/projects/py/PDFPlay/tests/.data/sample6_wm.pdf'
+
+    pdf.apply_watermark(text, path, out)
 
 
 if __name__ == '__main__':
