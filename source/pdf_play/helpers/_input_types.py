@@ -25,8 +25,7 @@ class _TargetFileOTO:
 class _OutputFileOTO:
 
     def __call__(self, path):
-        print(f'P: {path}')
-        if not _is_pdf(path):
+        if not utils.is_pdf(path):
             name_and_extension = path.split(sep)[-1].split('.')
             if len(name_and_extension) == 2:
                 extension = name_and_extension[-1]
