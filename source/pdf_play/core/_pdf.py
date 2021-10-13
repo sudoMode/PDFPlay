@@ -72,7 +72,6 @@ class PDF:
 
     def apply_watermark(self, wm_text, file_to_watermark, file_to_save_it_as, **style):
         self._load_watermark(wm_text, file_to_watermark, file_to_save_it_as, **style)
-        print(f'working...: {locals()}')
         if self._watermark_is_loaded:
             for i in range(self._target.getNumPages()):
                 page = self._target.getPage(i)
