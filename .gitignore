@@ -1,5 +1,6 @@
 # dirs
 .idea/
+.ipynb_checkpoints/
 venv/
 *dist/
 *.egg-info
@@ -11,3 +12,4 @@ venv/
 *.DS_Store
 wms.txt
 notes
+*rough*
