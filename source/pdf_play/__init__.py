@@ -58,7 +58,7 @@ def _watermark_oto(**kwargs):
 
 
 def _watermark(**kwargs):
-    if kwargs is None:
+    if not kwargs:
         # TODO: move it to parser
         kwargs = vars(parse_watermark_args())
     type_ = kwargs.get('type', 'oto')
