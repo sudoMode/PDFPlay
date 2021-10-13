@@ -20,7 +20,8 @@ class Watermark:
         # TODO: cleanup
         self._page_size = page_size
         self._font_name = font_name
-        self._font_size = font_size
+        self.font_size = font_size
+        self._font_size = 50
         self._text_alignment = text_alignment
         self._color = font_color
         self._text = text
@@ -28,10 +29,11 @@ class Watermark:
         self._position_y = position_y
         self.verbose = verbose
         self.debug = debug
-        self._x, self._y = 0, 0
+        self._x, self._y = self._page_size
+        self._d = int(sqrt(self._x ** 2 + self._y ** 2))
         self._init_canvas()
         self._update_style()
-        self._update_canvas()
+        # self._update_canvas()
 
     def _init_canvas(self):
         self._buffer = BytesIO()
@@ -54,22 +56,18 @@ class Watermark:
                 - vertical: y-axis length
                 - diagonal: diagonal length
         """
-        x, y = list(map(int, self._page_size))
-        length = round(x)
-        if self._text_alignment == 'diagonal':
-            length = round(sqrt(x ** 2 + y ** 2))
-        if self._text_alignment == 'vertical':
-            length = round(y)
-        self._max_length = length * .8
+        lengths = dict(horizontal=self._x, vertical=self._y, diagonal=self._d)
+        length = lengths[self._text_alignment]
+        self._max_length = int(length * .8)
 
     def _set_font_size(self):
-        x, y = list(map(int, self._page_size))
+        x, y = self._page_size
         max_width = round(self._max_length * .5)
         max_font = x * .1
-        if self._font_size == 'medium':
+        if self.font_size == 'medium':
             max_width = round(self._max_length * .75)
             max_font = x * .2
-        if self._font_size == 'large':
+        if self.font_size == 'large':
             max_width = round(self._max_length)
             max_font = x * .3
         size = 5
@@ -103,12 +101,17 @@ class Watermark:
         self._canvas.setFillColor((self._red, self._green, self._blue), alpha=self._alpha)
         # TODO: object attrs
         x, y = list(map(int, self._page_size))
+        cx, cy = (x // 2), (y // 2)  # - (self._font_size * 2)
         # set origin to center of the page
-        self._canvas.translate(x // 2, y // 2)
+        self._canvas.translate(cx, cy)
         self._canvas.rotate(self._rotation)
-        self._canvas.drawCentredString(self._x, -.25 * self._font_size,
-                                       self._text)
-        self._canvas.save()
+        x, y = (0, 0)
+        self._canvas.drawCentredString(x, y,
+                                       'a really long email id @ gmail.com but it'
+                                       ' needs to be longer')
+        # self._canvas.drawCentredString(self._x, -.25 * self._font_size,
+        #                                self._text)
+        # self._canvas.save()
 
     def _update_style(self):
         self._set_max_length()
@@ -117,6 +120,50 @@ class Watermark:
         self._set_color()
         # self._set_position()
 
+    def _calculate_font_size(self, text=None, font=None):
+        if text is None:
+            text = self._text
+        if font is None:
+            font = self._font_name
+        print('-------Cal--------')
+        factors = dict(small=.3, medium=.5, large=.7)
+        max_width = int(self._max_length * factors[self.font_size])
+        size = 10
+        print(f'MW: {max_width}')
+        while True:
+            width = self._canvas.stringWidth(text, font, size)
+            print(f'W: {width} | F: {size} | P: {size * len(text)}')
+            if width > max_width:
+                break
+            size += 10
+        return size
+
+    def _draw_watermark(self):
+        """
+
+        """
+        print(f'PS: {self._page_size}')
+        print(f'X-Axis: {self._x} | Y-Axis: {self._y} | D-Axis: {self._d}')
+        print(f'ML: {self._max_length}')
+        print(f'FS: {self._font_size}')
+        x, y = self._page_size
+        texts = ['singh.mandeep2207@gmail.com',
+                 'vivek.vijayvargia@k2qcapital.com',
+                 'gaurav.chaudhary@amakaan.comandsomedirtytext']
+        self._canvas.setPageSize(self._page_size)
+        self._canvas.setFont(self._font_name, self._font_size)
+        self._canvas.setFillColor((self._red, self._green, self._blue), alpha=self._alpha)
+        self._canvas.translate(x // 2, y // 2)
+        self._canvas.rotate(self._rotation)
+        x, y = (0, 0)
+        for text in texts:
+            font_size = self._calculate_font_size(text)
+            self._canvas.setFontSize(font_size)
+            self._canvas.drawCentredString(x, y, text)
+            y -= font_size * 1.25
+        self._canvas.save()
+
     def unload(self):
+        self._draw_watermark()
         watermarked_pdf = PdfFileReader(self._buffer)
         return watermarked_pdf.getPage(0)

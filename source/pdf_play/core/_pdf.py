@@ -48,9 +48,9 @@ class PDF:
         self._watermark_text = text
 
     def _set_watermark(self, **style):
-        page_size = self._target.getPage(0).mediaBox[-2:]
+        page_size = list(map(int, self._target.getPage(0).mediaBox[-2:]))
         font_name = style.get('font_name', 'Helvetica-Bold')
-        font_size = style.get('font_size', 'medium')
+        font_size = style.get('font_size', 'large')
         font_color = style.get('font_color', 'lightred')
         text_alignment = style.get('text_alignment', 'diagonal')
         watermark = Watermark(self._watermark_text, page_size=page_size,
