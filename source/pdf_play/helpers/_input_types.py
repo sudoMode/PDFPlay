@@ -64,12 +64,11 @@ class _OutputFileOTM:
 class _WatermarkMTO:
 
     def __call__(self, path):
-        supported = ['.txt', '.csv', '.xlsx', '.xls']
-        if isfile(path):
-            # check that paths ends with one of the supported file types
-            if not any(map(lambda x: x == path[-len(x):], supported)):
-                raise ArgumentTypeError(f'Bad input for watermark file: {path}, '
-                                        f'please check supported file types: {supported}')
+        supported = ['.csv', '.xlsx', '.xls']
+        # check that paths ends with one of the supported file types
+        if any(map(lambda x: path.endswith(x), supported)):
+            if not isfile(path):
+                raise ArgumentTypeError(f'File does not exist: {path}')
         return path
 
 

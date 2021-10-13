@@ -6,12 +6,12 @@
 """
 
 from argparse import ArgumentParser
+from os import getcwd
 from os import makedirs
 from os.path import isdir
 from os.path import join
 from os.path import sep
 from pathlib import Path
-from os import getcwd
 
 from pdf_play.__settings__ import COLORS
 from pdf_play.__settings__ import FONTS
@@ -35,6 +35,14 @@ def _validate_otm(args):
 
 def _validate_mto(args):
     _validate_otm(args)
+    texts = []
+    for item in args.texts:
+        if isinstance(item, str):
+            name, text = item, item
+        else:
+            name, text = item
+        texts.append([name, text])
+    args.texts = texts
 
 
 def _validate_oto(args):

@@ -72,12 +72,12 @@ class PDF:
 
     def apply_watermark(self, wm_text, file_to_watermark, file_to_save_it_as, **style):
         self._load_watermark(wm_text, file_to_watermark, file_to_save_it_as, **style)
+        print(f'working...: {locals()}')
         if self._watermark_is_loaded:
             for i in range(self._target.getNumPages()):
                 page = self._target.getPage(i)
                 page.mergePage(self._watermark)
                 self._out.addPage(page)
-
             with open(self._out_path, 'wb') as f:
                 self._out.write(f)
             self._target.stream.close()
@@ -91,7 +91,7 @@ def _test():
            '\nwatermark text 4' \
            '\nwatermark text 5'
     path = '/Users/mandeepsingh/dev/projects/py/PDFPlay/tests/.data/sample6.pdf'
-    out = '/Users/mandeepsingh/dev/projects/py/PDFPlay/tests/.data/sample6_wm.pdf'
+    out = '/Users/mandeepsingh/dev/projects/py/PDFPlay/tests/.data/sample6 wm.pdf'
 
     pdf.apply_watermark(text, path, out)
 

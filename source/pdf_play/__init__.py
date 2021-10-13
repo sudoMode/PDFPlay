@@ -8,6 +8,8 @@ from pdf_play.helpers import parse_watermark_args
 
 
 def _watermark_mto(**kwargs):
+    print(f'called: {kwargs}')
+
     texts = kwargs['texts']
     target_file = kwargs['target_file']
     output_directory = kwargs['output_directory']
@@ -16,8 +18,9 @@ def _watermark_mto(**kwargs):
     total = len(texts)
     if kwargs['verbose']:
         print(f'--> Received {total} watermark texts...')
-    for i, text in enumerate(texts):
-        output_file = join(output_directory, f'{text}.pdf')
+    for i, item in enumerate(texts):
+        output_file = join(output_directory, f'{item[0]}.pdf')
+        text = item[1]
         watermark(text, target_file, output_file, **kwargs)
         if kwargs['verbose']:
             print(f'--> Watermarked: {i + 1} / {total}', end='\r')
@@ -67,7 +70,9 @@ def _watermark(**kwargs):
 
 def main():
     args = parse_user_args()
+    print('---------------------------')
     print(f'User Args: {args}')
+    # return
     debug = args.debug
     command_map = dict(watermark=_watermark)
     try:
@@ -76,3 +81,7 @@ def main():
         print(f'Error: {e}')
         if debug:
             raise e
+
+
+if __name__ == '__main__':
+    main()

@@ -133,12 +133,12 @@ class Watermark:
             if width > max_width or size > max_width*.2:
                 break
             size += 2
-        print(f'MQ: {max_width} | FS: {size}')
         return size
 
     def _draw_watermark(self):
         """
-
+            update canvas style
+            draw watermark text
         """
         texts = self._text.splitlines()
         self._canvas.setPageSize(self._page_size)
