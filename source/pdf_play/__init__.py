@@ -70,9 +70,6 @@ def _watermark(**kwargs):
 
 def main():
     args = parse_user_args()
-    print('---------------------------')
-    print(f'User Args: {args}')
-    # return
     debug = args.debug
     command_map = dict(watermark=_watermark)
     try:
