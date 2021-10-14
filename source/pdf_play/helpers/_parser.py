@@ -188,8 +188,12 @@ def parse_user_args(command=None):
                          type=types.watermark_mto,
                          action=actions.watermark_mto,
                          dest='texts', nargs='+',
-                         help="""(**) Texts that are to be watermarked or path to a txt
-                              file that contains such texts""")
+                         help="""(**) Texts that are to be watermarked or path to 
+                         csv/excel files that contain watermark text. These file can 
+                         contain upto 2 columns, first for output file name and second 
+                         for the watermark text, if there's just one column then it 
+                         will be used as watermark text.
+                         """)
         mto.add_argument('-i', '--input', default=None, type=types.target_file_mto,
                          action=actions.target_file_oto, dest='target_file',
                          required=True,
@@ -318,8 +322,11 @@ def parse_watermark_args():
                          type=types.watermark_mto,
                          action=actions.watermark_mto,
                          dest='texts', nargs='+',
-                         help="""(**) Texts that are to be watermarked or path to a txt
-                                      file that contains such texts""")
+                         help="""(**) Texts that are to be watermarked or path to 
+                         csv/excel files that contain watermark text. These file can 
+                         contain upto 2 columns, first for output file name and second 
+                         for the watermark text, if there's just one column then it 
+                         will be used as watermark text.""")
         mto.add_argument('-i', '--input', default=None, type=types.target_file_mto,
                          action=actions.target_file_oto, dest='target_file',
                          required=True,
