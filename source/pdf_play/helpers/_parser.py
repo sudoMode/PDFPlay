@@ -16,6 +16,7 @@ from pathlib import Path
 from pdf_play.__settings__ import COLORS
 from pdf_play.__settings__ import FONTS
 from pdf_play.__settings__ import FONT_SIZES
+from pdf_play.__settings__ import VERSION
 from pdf_play.helpers import _input_actions as actions
 from pdf_play.helpers import _input_types as types
 
@@ -81,7 +82,7 @@ def parse_user_args(command=None):
                                 epilog="""--> Run -h/--help against indivdual commands to 
                                 get more details. Example: watermark -h""")
         parser.add_argument('-v', '--version', action='version',
-                            version='PDF-Play 1.2.7',
+                            version=f'PDF-Play: {VERSION}',
                             help='display version of the program')
         parser.add_argument('-d', '--debug', action='store_true',
                             default=False, dest='debug',

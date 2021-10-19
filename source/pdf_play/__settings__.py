@@ -1,5 +1,6 @@
 from os.path import join
 from pathlib import Path
+from pdf_play._version import VERSION
 
 # project dirs & files
 BASE = Path(__file__).parent.resolve()
@@ -12,5 +13,4 @@ COLORS = ['black', 'grey', 'lightgrey', 'red', 'lightred', 'blue', 'lightblue', 
           'lightgreen',
           'white']
 
-_MAJOR, _MINOR, _MICRO = (1, 2, 7)
-VERSION = f'{_MAJOR}.{_MINOR}.{_MICRO}'
+__all__ = ['VERSION']

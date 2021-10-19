@@ -73,7 +73,7 @@ def main():
     s = '/Users/mandeepsingh/dev/projects/py/PDFPlay/tests/.data/sample6.pdf'
     command = ['-d', 'watermark', 'mto', '-tf', f, '-i', s, '-nh',
                'file_name']
-    args = parse_user_args(command)
+    args = parse_user_args(command=command)
     debug = args.debug
     command_map = dict(watermark=_watermark)
     try:
