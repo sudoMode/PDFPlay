@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 from distutils.util import convert_path
 
 namespace = {}
-version_path = convert_path('source/pdf_play/__settings__.py')
+version_path = convert_path('source/pdf_play/_version.py')
 
 with open(version_path) as f:
     content = f.read()

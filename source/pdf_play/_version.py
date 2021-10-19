@@ -1,0 +1,2 @@
+_MAJOR, _MINOR, _MICRO = (1, 2, 7)
+VERSION = f'{_MAJOR}.{_MINOR}.{_MICRO}'
