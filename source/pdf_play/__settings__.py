@@ -11,3 +11,6 @@ FONT_SIZES = ['small', 'large', 'medium']
 COLORS = ['black', 'grey', 'lightgrey', 'red', 'lightred', 'blue', 'lightblue', 'green',
           'lightgreen',
           'white']
+
+_MAJOR, _MINOR, _MICRO = (1, 2, 7)
+VERSION = f'{_MAJOR}.{_MINOR}.{_MICRO}'

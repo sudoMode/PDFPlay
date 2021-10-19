@@ -23,6 +23,10 @@ _pdf_play = f'''\n{"-" * 100}\n{"*" * 30}{" " * 16}PDF-Play{" " * 16}{"*" * 30
 }\n{"-" * 100}\n'''
 
 
+def _generate_watermark_input(args):
+    pass
+
+
 def _validate_otm(args):
     if args.output_directory is None:
         args.output_directory = join(getcwd(), 'watermarked')
@@ -33,14 +37,7 @@ def _validate_otm(args):
 
 def _validate_mto(args):
     _validate_otm(args)
-    texts = []
-    for item in args.texts:
-        if isinstance(item, str):
-            name, text = item, item
-        else:
-            name, text = item
-        texts.append([name, text])
-    args.texts = texts
+    args.watermark_input = _generate_watermark_input(args)
 
 
 def _validate_oto(args):
@@ -84,7 +81,7 @@ def parse_user_args(command=None):
                                 epilog="""--> Run -h/--help against indivdual commands to 
                                 get more details. Example: watermark -h""")
         parser.add_argument('-v', '--version', action='version',
-                            version='PDF-Play 1.2.1',
+                            version='PDF-Play 1.2.7',
                             help='display version of the program')
         parser.add_argument('-d', '--debug', action='store_true',
                             default=False, dest='debug',
