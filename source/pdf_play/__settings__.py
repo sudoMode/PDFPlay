@@ -13,4 +13,4 @@ COLORS = ['black', 'grey', 'lightgrey', 'red', 'lightred', 'blue', 'lightblue', 
           'lightgreen',
           'white']
 
-__all__ = ['VERSION']
+__all__ = ['VERSION', 'COLORS', 'FONT_SIZES', 'FONTS']

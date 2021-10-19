@@ -25,7 +25,13 @@ _pdf_play = f'''\n{"-" * 100}\n{"*" * 30}{" " * 16}PDF-Play{" " * 16}{"*" * 30
 
 
 def _generate_watermark_input(args):
-    pass
+    target_columns = []
+    if args.text_data is not None:
+        data = args.text_data
+        if args.name_header is not None:
+            target_columns.append(args.name_header)
+        if args.text_header is not None:
+            target_columns.append(args.text_header)
 
 
 def _validate_otm(args):
@@ -193,6 +199,11 @@ def parse_user_args(command=None):
                          help="""Path to the CSV/Excel file containing watermark 
                          texts.
                          """)
+        mto.add_argument('-nh', '--name-header', default=None,
+                         type=str,
+                         dest='name_header',
+                         help="""Name of the column to be used for file names 
+                                 """)
         mto.add_argument('-i', '--input', default=None, type=types.target_file_mto,
                          action=actions.target_file_oto, dest='target_file',
                          required=True,
