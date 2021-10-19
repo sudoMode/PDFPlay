@@ -67,22 +67,26 @@ class _OutputFileOTM(Action):
 class _WatermarkMTO(Action):
 
     def __call__(self, parser, namespace, values, option_string=None):
-        values_ = []
-        for value in values:
-            if isfile(value):
-                if value.endswith('.csv'):
-                    data = pd.read_csv(value)
-                else:
-                    data = pd.read_excel(value)
-                values_.extend(data.iloc[:, :2].values.tolist())
-                continue
-            values_.append(value)
-        setattr(namespace, self.dest, values_)
+        setattr(namespace, self.dest, values)
+
+
+class _WatermarkMTOFile(Action):
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        """read input from a file CSV/Excel file
+            return dataframe
+            """
+        def _read_file(file):
+            return pd.read_csv(file) if file.endswith('.csv')\
+                   else pd.read_excel(file)
+
+        setattr(namespace, self.dest, _read_file(values))
 
 
 target_file_oto = _TargetFileOTO
 output_file_oto = _OutputFileOTO
 target_file_otm = _TargetFileOTM
 output_file_otm = _OutputFileOTM
+watermark_mto_file = _WatermarkMTOFile
 watermark_mto = _WatermarkMTO
 watermark_text = _WatermarkText

@@ -71,9 +71,26 @@ class _WatermarkMTO:
         return path
 
 
+class _WatermarkMTOFile:
+
+    def __call__(self, path):
+        """validate:
+            - file type is supported
+            - file exists"""
+        supported = ['csv', 'xlsx', 'xls']
+        type_ = path.split(sep)[-1].split('.')[-1]
+        if type_ not in supported:
+            raise ArgumentTypeError(f'Invalid file type, supported: {supported} | '
+                                    f'received: {type_}')
+        if not isfile(path):
+            raise ArgumentTypeError(f'File does not exist: {path}')
+        return path
+
+
 target_file_oto = _TargetFileOTO()
 output_file_oto = _OutputFileOTO()
 target_file_otm = _TargetFileOTM()
 output_file_otm = _OutputFileOTM()
 watermark_mto = _WatermarkMTO()
+watermark_mto_file = _WatermarkMTOFile()
 target_file_mto = _TargetFileOTO()

@@ -27,8 +27,6 @@ def _validate_otm(args):
     if args.output_directory is None:
         args.output_directory = join(getcwd(), 'watermarked')
         if not isdir(args.output_directory):
-            # print('User did not provide an output location, a directory called '
-            #       '"watermarked" will be created to store all the watermarked PDF(s)')
             makedirs(args.output_directory)
     print(f'Watermarked files will be saved to: {args.output_directory}')
 
@@ -185,14 +183,17 @@ def parse_user_args(command=None):
                                       'MyPC/SampleWatermarks/sample1.txt' -i 'sample.pdf'
                                       """)
         mto.add_argument('-t', '--text', default='PDFPlay',
-                         type=types.watermark_mto,
+                         type=str,
                          action=actions.watermark_mto,
                          dest='texts', nargs='+',
-                         help="""(**) Texts that are to be watermarked or path to 
-                         csv/excel files that contain watermark text. These file can 
-                         contain upto 2 columns, first for output file name and second 
-                         for the watermark text, if there's just one column then it 
-                         will be used as watermark text.
+                         help="""Texts to watermark, accepts multiple values 
+                         separated by white-space. Ex: 'watermark #1' 'watermark #2'""")
+        mto.add_argument('-tf', '--text-file', default=None,
+                         type=types.watermark_mto_file,
+                         action=actions.watermark_mto_file,
+                         dest='text_data',
+                         help="""Path to the CSV/Excel file containing watermark 
+                         texts.
                          """)
         mto.add_argument('-i', '--input', default=None, type=types.target_file_mto,
                          action=actions.target_file_oto, dest='target_file',
@@ -202,6 +203,9 @@ def parse_user_args(command=None):
                          type=types.output_file_otm,
                          action=actions.output_file_otm, dest='output_directory',
                          help='Directory to save watermarked files')
+        mto.add_argument('-nh', '--name-header', default=None, type=str,
+                         dest='name_header',
+                         help='Column name to file names from')
         mto.add_argument('-fn', '--font-name', default='Helvetica-Bold', type=str,
                          choices=FONTS, dest='font_name',
                          help='Name of the font that you want to use in the watermark')
@@ -353,8 +357,8 @@ def parse_watermark_args():
 
         args = parser.parse_args()
         args.command = 'watermark'
-        _validate_args(parser, args)
-        args = _update_args(args)
+        # _validate_args(parser, args)
+        # args = _update_args(args)
         return args
     except Exception as e:
         print(f'Error --> Bad user-input: {e}')

@@ -34,6 +34,9 @@ class WatermarkTests(TestCase):
             self.assertTrue(status)
             self.assertTrue(isfile(output_file))
 
+    def test_excel(self):
+        pass
+
 
 if __name__ == '__main__':
     main()

@@ -4,6 +4,7 @@ client = PDF(debug=True)
 
 
 def watermark(wm_text, file_to_watermark, file_to_save_it_as, **style):
+    print(f'WM Text: {wm_text}')
     client.apply_watermark(wm_text, file_to_watermark, file_to_save_it_as, **style)
     return True
 
