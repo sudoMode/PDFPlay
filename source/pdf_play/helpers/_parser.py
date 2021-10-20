@@ -202,8 +202,11 @@ def parse_user_args(command=None):
         mto.add_argument('-nh', '--name-header', default=None,
                          type=str,
                          dest='name_header',
-                         help="""Name of the column to be used for file names 
-                                 """)
+                         help="""Name of the column to be used for file names""")
+        mto.add_argument('-th', '--text-header', default=None,
+                         type=str,
+                         dest='text_header',
+                         help="""Name of the column to be used for watermark texts""")
         mto.add_argument('-i', '--input', default=None, type=types.target_file_mto,
                          action=actions.target_file_oto, dest='target_file',
                          required=True,
@@ -212,9 +215,6 @@ def parse_user_args(command=None):
                          type=types.output_file_otm,
                          action=actions.output_file_otm, dest='output_directory',
                          help='Directory to save watermarked files')
-        mto.add_argument('-nh', '--name-header', default=None, type=str,
-                         dest='name_header',
-                         help='Column name to file names from')
         mto.add_argument('-fn', '--font-name', default='Helvetica-Bold', type=str,
                          choices=FONTS, dest='font_name',
                          help='Name of the font that you want to use in the watermark')

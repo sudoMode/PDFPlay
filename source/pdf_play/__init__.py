@@ -69,8 +69,8 @@ def _watermark(**kwargs):
 
 
 def main():
-    f = '/Users/mandeepsingh/dev/projects/py/PDFPlay/tests/.data/sample_target.xlsx'
-    s = '/Users/mandeepsingh/dev/projects/py/PDFPlay/tests/.data/sample6.pdf'
+    f = '/Users/mandeepsingh/dev/projects/PDFPlay/tests/.data/sample_mto.xlsx'
+    s = '/Users/mandeepsingh/dev/projects/PDFPlay/tests/.data/sample6.pdf'
     command = ['-d', 'watermark', 'mto', '-tf', f, '-i', s, '-nh',
                'file_name']
     args = parse_user_args(command=command)
