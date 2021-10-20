@@ -72,7 +72,7 @@ def main():
     f = '/Users/mandeepsingh/dev/projects/PDFPlay/tests/.data/sample_mto.xlsx'
     s = '/Users/mandeepsingh/dev/projects/PDFPlay/tests/.data/shin.pdf'
     command = ['-d', 'watermark', 'mto', '-tf', f, '-i', s, '-nh',
-               'file_name']
+               'file_name', '-th', 'watermark_text']
     args = parse_user_args(command=command)
     debug = args.debug
     command_map = dict(watermark=_watermark)

@@ -13,6 +13,8 @@ from os.path import join
 from os.path import sep
 from pathlib import Path
 
+import pandas as pd
+
 from pdf_play.__settings__ import COLORS
 from pdf_play.__settings__ import FONTS
 from pdf_play.__settings__ import FONT_SIZES
@@ -24,24 +26,36 @@ _pdf_play = f'''\n{"-" * 100}\n{"*" * 30}{" " * 16}PDF-Play{" " * 16}{"*" * 30
 }\n{"-" * 100}\n'''
 
 
+def _read_file(file, header=1):
+    reader = pd.read_csv if file.endswith('.csv') else pd.read_excel
+    return reader(file, header=header)
+
+
 def _generate_watermark_input(args):
     if args.text_data is not None:
-        data = args.text_data
+        data = _read_file(args.text_data)
+        print('-----------------DATA----------------')
         data.dropna(inplace=True)
+        data.columns = map(lambda x: x.lower().replace(' ', '_'), data.columns)
+        print(data)
         # columns_to_drop = list(filter(lambda x: 'unnamed' in x.lower(), data.columns))
         if args.text_header:
-            print(f'Header: {args.text_header}')
-            watermark_texts = data[args.text_header].tolist()
+            header = args.text_header.lower().replace(' ', '_')
+            print(f'Text Header1: {args.text_header}')
+            watermark_texts = data[header].tolist()
         else:
-            print()
+            print(f'Text Header2: {args.text_header}')
             watermark_texts = data.iloc[:, 0].tolist()
         if args.name_header:
-            file_names = data[args.name_header].tolist()
+            header = args.name_header.lower().replace(' ', '_')
+            print(f'Name Header1: {args.name_header}')
+            file_names = data[header].tolist()
         else:
+            print(f'Name Header2: {args.name_header}')
             file_names = list(map(lambda x: x.splitlines()[0], watermark_texts))
 
-    if args.texts:
-        file_names.extend(list(map(lambda x: x, args.texts)))
+    # if args.texts:
+    #     file_names.extend(list(map(lambda x: x, args.texts)))
     return dict(zip(file_names, watermark_texts))
 
 

@@ -76,11 +76,7 @@ class _WatermarkMTOFile(Action):
         """read input from a file CSV/Excel file
             return dataframe
             """
-        def _read_file(file):
-            return pd.read_csv(file) if file.endswith('.csv')\
-                   else pd.read_excel(file)
-
-        setattr(namespace, self.dest, _read_file(values))
+        setattr(namespace, self.dest, values)
 
 
 target_file_oto = _TargetFileOTO
