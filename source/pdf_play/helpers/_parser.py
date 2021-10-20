@@ -25,13 +25,24 @@ _pdf_play = f'''\n{"-" * 100}\n{"*" * 30}{" " * 16}PDF-Play{" " * 16}{"*" * 30
 
 
 def _generate_watermark_input(args):
-    target_columns = []
     if args.text_data is not None:
         data = args.text_data
-        if args.name_header is not None:
-            target_columns.append(args.name_header)
-        if args.text_header is not None:
-            target_columns.append(args.text_header)
+        data.dropna(inplace=True)
+        # columns_to_drop = list(filter(lambda x: 'unnamed' in x.lower(), data.columns))
+        if args.text_header:
+            print(f'Header: {args.text_header}')
+            watermark_texts = data[args.text_header].tolist()
+        else:
+            print()
+            watermark_texts = data.iloc[:, 0].tolist()
+        if args.name_header:
+            file_names = data[args.name_header].tolist()
+        else:
+            file_names = list(map(lambda x: x.splitlines()[0], watermark_texts))
+
+    if args.texts:
+        file_names.extend(list(map(lambda x: x, args.texts)))
+    return dict(zip(file_names, watermark_texts))
 
 
 def _validate_otm(args):
