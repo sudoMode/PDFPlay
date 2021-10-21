@@ -71,10 +71,13 @@ def validate_oto(args):
 
 
 def update_args(args):
+    # update rgb values
     if args.rgb != (0, 0, 0):
-        print(f'RGB: {args.rgb}')
         if len(args.rgb) > 3:
-            raise ValueError(f'RGB expects only 3 values, received: {len(args.rgb)}')
+            raise ValueError(f'RGB expects 3 values, received: {len(args.rgb)} -> '
+                             f'{args.rgb}')
+        while len(args.rgb) < 3:
+            args.rgb.append(0)
     if args.type == 'oto':
         validate_oto(args)
     if args.type == 'otm':

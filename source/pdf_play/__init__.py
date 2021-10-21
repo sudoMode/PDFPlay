@@ -68,18 +68,18 @@ def _watermark(**kwargs):
     type_map[type_](**kwargs)
 
 
-def main():
+def main(debug=False):
     import json
     f = '/Users/mandeepsingh/dev/projects/PDFPlay/tests/.data/sample_mto.xlsx'
     s = '/Users/mandeepsingh/dev/projects/PDFPlay/tests/.data/shin.pdf'
     command = ['-d', 'watermark', 'mto', '-tf', f, '-i', s, '-nh',
-               'file_name', '-th', 'watermark_text', '-rgb', '10', '20', '33', '876587']
-    args = parse_user_args(command=command)
-    print(json.dumps(vars(args), indent=2, sort_keys=True))
-    exit()
-    debug = args.debug
-    command_map = dict(watermark=_watermark)
+               'file_name', '-th', 'watermark_text', '-rgb', '10', '20']
     try:
+        args = parse_user_args(command=command)
+        print(json.dumps(vars(args), indent=2, sort_keys=True))
+        exit()
+        debug = debug or args.debug
+        command_map = dict(watermark=_watermark)
         command_map[args.command](**vars(args))
     except Exception as e:
         print(f'Error: {e}')
