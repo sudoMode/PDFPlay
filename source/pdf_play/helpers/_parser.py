@@ -6,14 +6,6 @@
 """
 
 from argparse import ArgumentParser
-from os import getcwd
-from os import makedirs
-from os.path import isdir
-from os.path import join
-from os.path import sep
-from pathlib import Path
-
-import pandas as pd
 
 from pdf_play.__settings__ import COLORS
 from pdf_play.__settings__ import FONTS
@@ -21,86 +13,10 @@ from pdf_play.__settings__ import FONT_SIZES
 from pdf_play.__settings__ import VERSION
 from pdf_play.helpers import _input_actions as actions
 from pdf_play.helpers import _input_types as types
+from pdf_play.helpers import _utils as utils
 
 _pdf_play = f'''\n{"-" * 100}\n{"*" * 30}{" " * 16}PDF-Play{" " * 16}{"*" * 30
 }\n{"-" * 100}\n'''
-
-
-def _read_file(file, header=1):
-    reader = pd.read_csv if file.endswith('.csv') else pd.read_excel
-    return reader(file, header=header)
-
-
-def _generate_watermark_input(args):
-    if args.text_data is not None:
-        data = _read_file(args.text_data)
-        print('-----------------DATA----------------')
-        data.dropna(inplace=True)
-        data.columns = map(lambda x: x.lower().replace(' ', '_'), data.columns)
-        print(data)
-        # columns_to_drop = list(filter(lambda x: 'unnamed' in x.lower(), data.columns))
-        if args.text_header:
-            header = args.text_header.lower().replace(' ', '_')
-            print(f'Text Header1: {args.text_header}')
-            watermark_texts = data[header].tolist()
-        else:
-            print(f'Text Header2: {args.text_header}')
-            watermark_texts = data.iloc[:, 0].tolist()
-        if args.name_header:
-            header = args.name_header.lower().replace(' ', '_')
-            print(f'Name Header1: {args.name_header}')
-            file_names = data[header].tolist()
-        else:
-            print(f'Name Header2: {args.name_header}')
-            file_names = list(map(lambda x: x.splitlines()[0], watermark_texts))
-
-    # if args.texts:
-    #     file_names.extend(list(map(lambda x: x, args.texts)))
-    return dict(zip(file_names, watermark_texts))
-
-
-def _validate_otm(args):
-    if args.output_directory is None:
-        args.output_directory = join(getcwd(), 'watermarked')
-        if not isdir(args.output_directory):
-            makedirs(args.output_directory)
-    print(f'Watermarked files will be saved to: {args.output_directory}')
-
-
-def _validate_mto(args):
-    _validate_otm(args)
-    args.watermark_input = _generate_watermark_input(args)
-
-
-def _validate_oto(args):
-    if args.output_file is None:
-        base = Path(args.target_file).parent.resolve()
-        file_name = args.target_file.split(sep)[-1]
-        name, extension = file_name.split('.')
-        args.output_file = join(base, f'{name}_watermarked.{extension}')
-    print(f'Watermarked files will be saved to: {args.output_file}')
-
-
-def _update_args(args):
-    if args.type == 'oto':
-        _validate_oto(args)
-    if args.type == 'otm':
-        _validate_otm(args)
-    if args.type == 'mto':
-        _validate_mto(args)
-    return args
-
-
-def _validate_args(parser, args):
-    if args.command is None:
-        print(_pdf_play)
-        parser.print_help()
-        exit(0)
-    else:
-        if args.type is None:
-            print('\n--> User must specify the mode of operation. '
-                  f'Get help: {args.command} -h')
-            exit(0)
 
 
 def parse_user_args(command=None):
@@ -211,7 +127,7 @@ def parse_user_args(command=None):
                                       'watermark text#1' 'watermark text#2' 
                                       'MyPC/SampleWatermarks/sample1.txt' -i 'sample.pdf'
                                       """)
-        mto.add_argument('-t', '--text', default='PDFPlay',
+        mto.add_argument('-t', '--text', default=None,
                          type=str,
                          action=actions.watermark_mto,
                          dest='texts', nargs='+',
@@ -232,6 +148,10 @@ def parse_user_args(command=None):
                          type=str,
                          dest='text_header',
                          help="""Name of the column to be used for watermark texts""")
+        mto.add_argument('-hr', '--header-row', default=1,
+                         type=int,
+                         dest='header_row',
+                         help="""Index of the header row""")
         mto.add_argument('-i', '--input', default=None, type=types.target_file_mto,
                          action=actions.target_file_oto, dest='target_file',
                          required=True,
@@ -249,15 +169,25 @@ def parse_user_args(command=None):
         mto.add_argument('-fc', '--font-color', default='lightred', type=str,
                          choices=COLORS, dest='font_color',
                          help='Color of the font')
+        mto.add_argument('-rgb', '--red-green-blue', default=(0, 0, 0), type=int,
+                         nargs='+',
+                         dest='rgb',
+                         help='RGB values, between 0-255. Ex: -rgb 255 255 255')
+        mto.add_argument('-tr', '--tranparency', default=0, type=int,
+                         choices=range(0, 101, 10),
+                         dest='tranparency',
+                         help='Tranparency percentage')
+        alignment_choices = ['horizontal', 'diagonal']
+        alignment_choices.extend(list(range(0, 361, 90)))
         mto.add_argument('-ta', '--text-alignment', default='diagonal', type=str,
-                         choices=['horizontal', 'diagonal'], dest='text_alignment',
+                         choices=alignment_choices, dest='text_alignment',
                          help='Alignment of the watermark in the document')
         mto.add_argument('-p', '--print', action='store_true',
                          default=False, dest='verbose',
                          help='Display informational messages')
         args = parser.parse_args() if command is None else parser.parse_args(command)
-        _validate_args(parser, args)
-        args = _update_args(args)
+        utils.validate_args(parser, args)
+        args = utils.update_args(args)
         return args
     except Exception as e:
         print(f'Error --> Bad user-input: {e}')
