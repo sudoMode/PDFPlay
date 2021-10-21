@@ -79,6 +79,15 @@ class _WatermarkMTOFile(Action):
         setattr(namespace, self.dest, values)
 
 
+class _FontSizeAction(Action):
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        print('----------------------------------')
+        print(f'FS: {values}')
+        print('----------------------------------')
+        setattr(namespace, self.dest, values)
+
+
 target_file_oto = _TargetFileOTO
 output_file_oto = _OutputFileOTO
 target_file_otm = _TargetFileOTM
@@ -86,3 +95,4 @@ output_file_otm = _OutputFileOTM
 watermark_mto_file = _WatermarkMTOFile
 watermark_mto = _WatermarkMTO
 watermark_text = _WatermarkText
+font_size_action = _FontSizeAction

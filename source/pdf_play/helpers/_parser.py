@@ -162,8 +162,12 @@ def parse_user_args(command=None):
     mto.add_argument('-fn', '--font-name', default='Helvetica-Bold', type=str,
                      choices=FONTS, dest='font_name',
                      help='Name of the font that you want to use in the watermark')
+    choices = ['small', 'medium', 'large']
+    choices.extend(range(20, 201, 20))
+    # choices = map(str, choices)
     mto.add_argument('-fs', '--font-size', default='medium', type=str,
-                     choices=FONT_SIZES, dest='font_size',
+                     choices=choices, dest='font_size',
+                     action=actions.font_size_action,
                      help='Size of the font')
     mto.add_argument('-fc', '--font-color', default='lightred', type=str,
                      choices=COLORS, dest='font_color',
@@ -171,20 +175,21 @@ def parse_user_args(command=None):
     mto.add_argument('-rgb', '--red-green-blue', default=(0, 0, 0), type=int,
                      nargs='+',
                      dest='rgb',
-                     help='RGB values, between 0-255. Ex: -rgb 255 255 255')
+                     help='RGB values between 0-255. Ex: -rgb 255 255 255')
     mto.add_argument('-tr', '--tranparency', default=0, type=int,
                      choices=range(0, 101, 10),
                      dest='tranparency',
                      help='Tranparency percentage')
-    alignment_choices = ['horizontal', 'diagonal']
-    alignment_choices.extend(list(range(0, 361, 90)))
     mto.add_argument('-ta', '--text-alignment', default='diagonal', type=str,
-                     choices=alignment_choices, dest='text_alignment',
+                     choices=['horizontal', 'diagonal'], dest='text_alignment',
                      help='Alignment of the watermark in the document')
+    mto.add_argument('-ra', '--rotation-angle', default=None, type=int,
+                     choices=range(0, 361, 15), dest='rotation_angle',
+                     help='Angle of rotation.')
     mto.add_argument('-p', '--print', action='store_true',
                      default=False, dest='verbose',
                      help='Display informational messages')
-    args = parser.parse_args() if command is None else parser.parse_args(command)
+    args = parser.parse_args(command) if command else parser.parse_args()
     utils.validate_args(parser, args)
     args = utils.update_args(args)
     return args

@@ -73,7 +73,8 @@ def main(debug=False):
     f = '/Users/mandeepsingh/dev/projects/PDFPlay/tests/.data/sample_mto.xlsx'
     s = '/Users/mandeepsingh/dev/projects/PDFPlay/tests/.data/shin.pdf'
     command = ['-d', 'watermark', 'mto', '-tf', f, '-i', s, '-nh',
-               'file_name', '-th', 'watermark_text', '-rgb', '10', '20']
+               'file_name', '-th', 'watermark_text', '-rgb', '10', '20',
+               '-ra', '120', '-fs', '100']
     try:
         args = parse_user_args(command=command)
         print(json.dumps(vars(args), indent=2, sort_keys=True))
