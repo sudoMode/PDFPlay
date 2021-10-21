@@ -21,21 +21,29 @@ def flatten(nested_list):
 
 
 def read_file(file, header=1):
+    # print(f'reading: {file}')
     reader = pd.read_csv if file.endswith('.csv') else pd.read_excel
     return reader(file, header=header)
 
 
 def generate_watermark_input(args):
+    # print('gen...')
     file_names, watermark_texts = [], []
     if args.text_data is not None:
+        # TODO: check dropna
         data = read_file(args.text_data)
-        data.dropna(inplace=True)
+        # data.dropna(inplace=True)
+        # print(data)
         data.columns = map(lambda x: x.lower().replace(' ', '_'), data.columns)
+        # print(data)
         if args.text_header:
             header = args.text_header.lower().replace(' ', '_')
             watermark_texts = data[header].tolist()
         else:
+            # print(22)
+            # print(data)
             watermark_texts = data.iloc[:, 0].tolist()
+            # print(watermark_texts)
         if args.name_header:
             header = args.name_header.lower().replace(' ', '_')
             file_names = data[header].tolist()
@@ -45,7 +53,10 @@ def generate_watermark_input(args):
     if args.texts:
         watermark_texts.extend(args.texts)
         file_names.extend(list(map(lambda x: x, args.texts)))
-    return dict(zip(file_names, watermark_texts))
+    data = dict(zip(file_names, watermark_texts))
+    # print('*************************')
+    # print(data)
+    return data
 
 
 def validate_otm(args):
@@ -58,6 +69,7 @@ def validate_otm(args):
 
 def validate_mto(args):
     validate_otm(args)
+    # print(f'came...: {args}')
     args.watermark_input = generate_watermark_input(args)
 
 

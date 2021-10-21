@@ -82,9 +82,8 @@ class _WatermarkMTOFile(Action):
 class _FontSizeAction(Action):
 
     def __call__(self, parser, namespace, values, option_string=None):
-        print('----------------------------------')
-        print(f'FS: {values}')
-        print('----------------------------------')
+        if values not in ['small', 'medium', 'large']:
+            values = int(values)
         setattr(namespace, self.dest, values)
 
 

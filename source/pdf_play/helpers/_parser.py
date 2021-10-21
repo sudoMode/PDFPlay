@@ -164,7 +164,7 @@ def parse_user_args(command=None):
                      help='Name of the font that you want to use in the watermark')
     choices = ['small', 'medium', 'large']
     choices.extend(range(20, 201, 20))
-    # choices = map(str, choices)
+    choices = list(map(str, choices))
     mto.add_argument('-fs', '--font-size', default='medium', type=str,
                      choices=choices, dest='font_size',
                      action=actions.font_size_action,

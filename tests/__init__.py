@@ -1,10 +1,13 @@
-from os.path import isfile
 from os import listdir
+from os.path import isfile
 from os.path import join
+from pathlib import Path
 from unittest import TestCase
 from unittest import main
 
 from pdf_play import watermark
+
+DATA = join(Path(__file__).parent.resolve(), '.data')
 
 
 class WatermarkTests(TestCase):
@@ -29,7 +32,7 @@ class WatermarkTests(TestCase):
         for i in range(len(target_files)):
             file = target_files[i]
             target_file = join(self.input_dir, file)
-            output_file = join(self.input_dir, f'wm_{i+1}.pdf')
+            output_file = join(self.input_dir, f'wm_{i + 1}.pdf')
             status = watermark(wm_text, target_file, output_file)
             self.assertTrue(status)
             self.assertTrue(isfile(output_file))
